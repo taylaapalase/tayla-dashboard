@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tayla · Brand Command Center</title>
+<style>
+  :root{
+    --cream:#FAF6EF; --paper:#FFFDF9; --ink:#2C2A26; --muted:#6E6355;
+    --brass:#B08D57; --brass-dark:#8A6D3F; --line:#E7DECF;
+    --green:#5A6B54; --terra:#B5714E; --gold-tint:#F3EAD6; --plum:#5A5075;
+    --shadow:0 1px 2px rgba(44,42,38,.05),0 8px 24px rgba(44,42,38,.06);
+    --sans:ui-sans-serif,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+    background:var(--cream); color:var(--ink); line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1120px;margin:0 auto;padding:0 22px 80px}
+  header.top{text-align:center;padding:44px 20px 26px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#FBF7F0,#FAF6EF)}
+  .kicker{font-family:var(--sans);letter-spacing:.28em;text-transform:uppercase;font-size:11px;color:var(--brass-dark);font-weight:600;margin-bottom:12px}
+  h1{font-size:38px;font-weight:600;letter-spacing:-.5px;line-height:1.08}
+  h1 .amp{color:var(--brass)}
+  .tagline{color:var(--muted);margin-top:12px;font-size:16.5px;font-style:italic}
+  nav.tabs{position:sticky;top:0;z-index:20;display:flex;flex-wrap:wrap;gap:4px;justify-content:center;background:rgba(250,246,239,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:10px 12px}
+  .tab{font-family:var(--sans);font-size:13.5px;font-weight:600;letter-spacing:.02em;padding:9px 16px;border-radius:999px;border:1px solid transparent;color:var(--muted);cursor:pointer;background:none;transition:all .15s}
+  .tab:hover{color:var(--ink);background:#F1E9DA}
+  .tab.active{color:#fff;background:var(--brass);border-color:var(--brass-dark);box-shadow:var(--shadow)}
+  .panel{display:none;padding-top:34px;animation:fade .3s ease}
+  .panel.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .section-title{font-size:14px;font-family:var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--brass-dark);font-weight:700;margin:6px 0 16px;display:flex;align-items:center;gap:10px}
+  .section-title::after{content:"";flex:1;height:1px;background:var(--line)}
+  .lead{font-size:17px;color:var(--muted);max-width:720px;margin-bottom:26px}
+  .grid{display:grid;gap:16px}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:20px 22px;box-shadow:var(--shadow)}
+  .card h3{font-size:19px;font-weight:600;margin-bottom:6px}
+  .card .pill{display:inline-block;font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;border-radius:999px;margin-bottom:10px}
+  .p-edu{background:#EAF0E6;color:#47583F}
+  .p-local{background:#FBEDE3;color:#9A5433}
+  .p-home{background:#F1EAD9;color:#8A6D3F}
+  .p-personal{background:#E9E6F0;color:#5A5075}
+  .card p.small{color:var(--muted);font-size:14.5px}
+  .card ul{list-style:none;margin-top:8px}
+  .card ul li{padding:6px 0 6px 22px;position:relative;font-size:15px;border-top:1px solid #F2EBDD}
+  .card ul li:first-child{border-top:none}
+  .card ul li::before{content:"›";position:absolute;left:4px;color:var(--brass);font-weight:700}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:26px}
+  .stat{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px;text-align:center;box-shadow:var(--shadow)}
+  .stat .num{font-size:32px;font-weight:600;color:var(--brass-dark);line-height:1}
+  .stat .lbl{font-family:var(--sans);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-top:8px}
+  .quote{background:linear-gradient(135deg,#F4ECDC,#F9F3E8);border:1px solid var(--line);border-left:4px solid var(--brass);border-radius:12px;padding:20px 24px;font-size:19px;font-style:italic;color:var(--ink);margin:8px 0 30px}
+  .quote span{display:block;font-style:normal;font-size:13px;font-family:var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--brass-dark);margin-top:10px;font-weight:600}
+  .dd{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .dd .box{border-radius:14px;padding:20px 22px;border:1px solid var(--line);box-shadow:var(--shadow)}
+  .dd .do{background:#EEF3EA}
+  .dd .dont{background:#FBEDE9}
+  .dd h4{font-family:var(--sans);font-size:13px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px}
+  .dd .do h4{color:#47583F}.dd .dont h4{color:#9A4A32}
+  .dd li{list-style:none;padding:7px 0 7px 24px;position:relative;font-size:15px;border-top:1px solid rgba(0,0,0,.05)}
+  .dd li:first-child{border-top:none}
+  .dd .do li::before{content:"✓";position:absolute;left:2px;color:#5A7A4A;font-weight:700}
+  .dd .dont li::before{content:"✕";position:absolute;left:2px;color:#B5583F;font-weight:700}
+  .chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:6px}
+  .chip{background:#F2EBDC;border:1px solid var(--line);border-radius:999px;padding:8px 15px;font-size:14.5px}
+  .chip.copy{cursor:pointer;transition:all .12s}
+  .chip.copy:hover{background:var(--brass);color:#fff;border-color:var(--brass-dark)}
+  .chip.copy:active{transform:scale(.96)}
+  .hint{font-family:var(--sans);font-size:12.5px;color:var(--muted);margin-top:10px;font-style:italic}
+  table{width:100%;border-collapse:collapse;background:var(--paper);border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:var(--shadow)}
+  th{font-family:var(--sans);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;text-align:left;color:var(--brass-dark);padding:13px 16px;background:#F5EEE0;border-bottom:1px solid var(--line)}
+  td{padding:12px 16px;font-size:15px;border-bottom:1px solid #F2EBDD}
+  tr:last-child td{border-bottom:none}
+  .badge{font-family:var(--sans);font-size:11px;font-weight:700;padding:3px 9px;border-radius:6px;letter-spacing:.03em}
+  .b-hot{background:#FBE4DC;color:#A6482E}
+  .b-warm{background:#F5EAD3;color:#8A6D3F}
+  .b-active{background:#E4EFDD;color:#47583F}
+  .check li{list-style:none;display:flex;align-items:flex-start;gap:12px;padding:11px 0;border-top:1px solid var(--line);font-size:16px}
+  .check li:first-child{border-top:none}
+  .check input{width:19px;height:19px;margin-top:3px;accent-color:var(--brass);cursor:pointer;flex:none}
+  .check li.done label{text-decoration:line-through;color:var(--muted)}
+  .autorow{display:flex;align-items:center;gap:18px;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px 22px;box-shadow:var(--shadow);margin-bottom:14px}
+  .autorow .day{flex:none;width:104px;text-align:center;border-right:1px solid var(--line);padding-right:16px}
+  .autorow .day .d{font-size:20px;font-weight:600;color:var(--brass-dark)}
+  .autorow .day .t{font-family:var(--sans);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-top:3px}
+  .autorow .body h3{font-size:18px;margin-bottom:3px}
+  .autorow .body p{color:var(--muted);font-size:14.5px}
+  .note{background:#F4ECDC;border:1px dashed var(--brass);border-radius:12px;padding:16px 20px;font-size:14.5px;color:var(--muted);margin-top:22px}
+  .note b{color:var(--ink)}
+  .note a{color:var(--brass-dark)}
+  footer{text-align:center;color:var(--muted);font-size:13px;margin-top:50px;padding-top:22px;border-top:1px solid var(--line);font-family:var(--sans)}
+  .toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:11px 22px;border-radius:999px;font-family:var(--sans);font-size:14px;opacity:0;transition:all .25s;z-index:80;pointer-events:none}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  /* buttons + forms */
+  .btn{font-family:var(--sans);font-size:13px;font-weight:600;padding:9px 15px;border-radius:999px;border:1px solid var(--brass-dark);background:var(--brass);color:#fff;cursor:pointer;transition:all .12s;text-decoration:none;display:inline-block;line-height:1.2}
+  .btn:hover{background:var(--brass-dark)}
+  .btn.ghost{background:none;color:var(--brass-dark)}
+  .btn.ghost:hover{background:#F1E9DA}
+  .btn.sm{font-size:12px;padding:6px 12px}
+  .btn.danger{border-color:#B5583F;color:#B5583F;background:none}
+  .btn.danger:hover{background:#FBEDE9}
+  .btn.tiny{font-size:11.5px;padding:4px 10px}
+  .cfg{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+  .cfg input{flex:1;min-width:220px;font-family:ui-monospace,Menlo,monospace;font-size:13px;padding:9px 12px;border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--ink)}
+  .status{font-family:var(--sans);font-size:12.5px;color:var(--muted)}
+  .status.ok{color:#47583F}.status.err{color:#9A4A32}
+  .field{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
+  .field label{font-family:var(--sans);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--brass-dark);font-weight:700}
+  .field input,.field select,.field textarea{font-family:inherit;font-size:15px;padding:9px 12px;border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--ink)}
+  .field textarea{min-height:70px;resize:vertical}
+  .frow{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .hubbar{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}
+  .hubbar .tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+  .sync{font-family:var(--sans);font-size:12px;font-weight:600;padding:5px 11px;border-radius:999px;background:#F2EBDC;color:var(--muted);border:1px solid var(--line)}
+  .sync.saved{background:#E4EFDD;color:#47583F}
+  .sync.saving{background:#F5EAD3;color:#8A6D3F}
+  .sync.err{background:#FBE4DC;color:#A6482E}
+  .empty{color:var(--muted);font-style:italic;font-size:14.5px;padding:14px 0}
+
+  /* clients */
+  .lane{margin-bottom:22px}
+  .lane h4{font-family:var(--sans);font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;display:flex;align-items:center;gap:10px;margin-bottom:10px}
+  .lane h4 .cnt{background:#F2EBDC;border-radius:999px;padding:1px 9px;font-size:11px;color:var(--muted)}
+  .lane h4::after{content:"";flex:1;height:1px;background:var(--line)}
+  .cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+  .ccard{background:var(--paper);border:1px solid var(--line);border-left-width:5px;border-radius:12px;padding:14px 16px;box-shadow:var(--shadow)}
+  .ccard .top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+  .ccard .name{font-size:17px;font-weight:600}
+  .ccard .type{font-family:var(--sans);font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border-radius:999px;background:#F2EBDC;color:var(--muted);flex:none}
+  .ccard .meta{color:var(--muted);font-size:14px;margin-top:4px}
+  .ccard .meta b{color:var(--ink);font-weight:600}
+  .ccard .notes{font-size:13.5px;color:var(--muted);margin-top:6px;font-style:italic}
+  .ccard .row{display:flex;gap:8px;align-items:center;margin-top:10px;flex-wrap:wrap}
+  .ccard select{font-family:var(--sans);font-size:12.5px;padding:6px 9px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink)}
+
+  /* anniversaries */
+  .tp{display:flex;gap:14px;align-items:flex-start;padding:12px 0;border-top:1px solid var(--line)}
+  .tp:first-child{border-top:none}
+  .tp .when{flex:none;width:92px;font-family:var(--sans);font-size:12px;font-weight:700;color:var(--brass-dark);line-height:1.3}
+  .tp .when small{display:block;font-weight:500;color:var(--muted)}
+  .tp .what b{font-weight:600}
+  .tp .what .sub{color:var(--muted);font-size:14px}
+  .tp .kind{font-family:var(--sans);font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border-radius:999px;background:#E9E6F0;color:var(--plum);margin-left:6px;vertical-align:middle}
+  .arow{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:12px 0;border-top:1px solid var(--line)}
+  .arow:first-child{border-top:none}
+  .arow .sub{color:var(--muted);font-size:14px}
+
+  /* calendar */
+  .caltools{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px}
+  .caltools .label{font-size:22px;font-weight:600;min-width:200px}
+  .seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:var(--paper)}
+  .seg button{font-family:var(--sans);font-size:12.5px;font-weight:600;padding:7px 14px;border:none;background:none;color:var(--muted);cursor:pointer}
+  .seg button.on{background:var(--brass);color:#fff}
+  .legend{display:flex;flex-wrap:wrap;gap:12px;font-family:var(--sans);font-size:12px;color:var(--muted);margin-bottom:12px}
+  .legend span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:-1px;background:currentColor}
+  .cal{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+  .cal .dow{font-family:var(--sans);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:center;padding:4px 0}
+  .cal .cell{background:var(--paper);border:1px solid var(--line);border-radius:10px;min-height:96px;padding:6px 7px;cursor:pointer;transition:background .12s;position:relative}
+  .cal .cell:hover{background:#F7F1E6}
+  .cal .cell.other{opacity:.45}
+  .cal .cell.today{border-color:var(--brass);box-shadow:inset 0 0 0 1px var(--brass)}
+  .cal .cell .dn{font-family:var(--sans);font-size:12px;font-weight:700;color:var(--muted)}
+  .cal .cell.today .dn{color:var(--brass-dark)}
+  .cal .ev{display:block;font-family:var(--sans);font-size:11px;line-height:1.25;padding:2px 6px;border-radius:5px;color:#fff;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .cal .ev.derived{opacity:.85;border:1px dashed rgba(255,255,255,.6)}
+  .cal .more{font-family:var(--sans);font-size:10.5px;color:var(--muted);margin-top:3px}
+  .cal .dots{display:none;gap:3px;flex-wrap:wrap;margin-top:4px}
+  .cal .dots i{width:7px;height:7px;border-radius:50%;display:inline-block}
+  .year{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+  .mini{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:12px 12px 10px;cursor:pointer;box-shadow:var(--shadow)}
+  .mini:hover{border-color:var(--brass)}
+  .mini h5{font-family:var(--sans);font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--brass-dark);margin-bottom:8px;text-align:center}
+  .mini .mg{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+  .mini .md{font-family:var(--sans);font-size:9.5px;text-align:center;color:var(--muted)}
+  .mini .d{text-align:center;font-family:var(--sans);font-size:10.5px;color:var(--ink);padding:2px 0 1px;border-radius:4px;min-height:22px}
+  .mini .d.other{color:transparent}
+  .mini .d.today{background:#F3EAD6;color:var(--brass-dark);font-weight:700}
+  .mini .d .dt{display:flex;justify-content:center;gap:2px;height:5px;margin-top:1px}
+  .mini .d .dt i{width:4px;height:4px;border-radius:50%;display:inline-block}
+  .ev-showings{background:#5A6B54}.ev-closings{background:#B5714E}.ev-marketing{background:#B08D57}.ev-anniversary{background:#5A5075}
+  .c-showings{color:#5A6B54}.c-closings{color:#B5714E}.c-marketing{color:#B08D57}.c-anniversary{color:#5A5075}
+
+  /* modal */
+  .modal{position:fixed;inset:0;background:rgba(44,42,38,.45);display:flex;align-items:flex-start;justify-content:center;padding:6vh 16px;z-index:60;overflow:auto}
+  .modal[hidden]{display:none}
+  .sheet{background:var(--paper);border:1px solid var(--line);border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.25);width:100%;max-width:520px;padding:22px 24px}
+  .sheet h3{font-size:21px;font-weight:600;margin-bottom:14px}
+  .sheet .actions{display:flex;justify-content:flex-end;gap:8px;margin-top:8px;flex-wrap:wrap}
+  .sheet .actions .spacer{flex:1}
+  .dayev{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--line)}
+  .dayev:first-child{border-top:none}
+  .dayev .dot{width:10px;height:10px;border-radius:50%;flex:none}
+  .dayev .t{flex:1}
+  .dayev .t small{display:block;color:var(--muted);font-family:var(--sans);font-size:12px}
+  .live .head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:8px}
+  .live .meta{font-family:var(--sans);font-size:12px;color:var(--muted);margin-top:2px}
+  .live .tools{display:flex;gap:6px;flex:none}
+  .live .md{max-height:520px;overflow:auto;padding:14px 16px;background:#FFFDF9;border:1px solid var(--line);border-radius:10px;font-size:14.5px;line-height:1.5}
+  .live .md.empty{color:var(--muted);font-style:italic}
+  .live .md h1{font-size:19px;margin:0 0 10px}.live .md h2{font-size:17px;margin:16px 0 6px}.live .md h3{font-size:15.5px;margin:14px 0 4px}
+  .live .md p{margin:6px 0}.live .md ul,.live .md ol{margin:6px 0 6px 20px}.live .md li{margin:3px 0}
+  .live .md blockquote{margin:8px 0;padding:8px 14px;border-left:3px solid var(--brass);background:#F7F1E6;border-radius:6px}
+  .live .md code{font-family:ui-monospace,Menlo,monospace;font-size:13px;background:#F2EBDC;padding:1px 5px;border-radius:4px}
+  .live .md pre{background:#F2EBDC;padding:10px 12px;border-radius:8px;overflow:auto}
+  .live .md hr{border:none;border-top:1px solid var(--line);margin:12px 0}
+  .live .md a{color:var(--brass-dark)}
+  @media(max-width:820px){.g2,.g3,.dd{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}h1{font-size:30px}.frow{grid-template-columns:1fr}}
+  @media(max-width:600px){.cal .cell{min-height:58px;padding:4px 5px}.cal .ev,.cal .more{display:none}.cal .dots{display:flex}.caltools .label{font-size:18px;min-width:0}.wrap{padding:0 12px 60px}.autorow{flex-direction:column;align-items:flex-start;gap:8px}.autorow .day{border-right:none;border-bottom:1px solid var(--line);padding:0 0 6px;width:auto;text-align:left}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="kicker">Weichert · Staten Island</div>
+  <h1>Tayla&rsquo;s Brand <span class="amp">Command Center</span></h1>
+  <p class="tagline">Staten Island&rsquo;s first-time-buyer realtor who actually explains things.</p>
+</header>
+
+<nav class="tabs">
+  <button class="tab active" data-t="overview">Overview</button>
+  <button class="tab" data-t="clients">Clients</button>
+  <button class="tab" data-t="anniversaries">Anniversaries</button>
+  <button class="tab" data-t="calendar">Calendar</button>
+  <button class="tab" data-t="content">Content</button>
+  <button class="tab" data-t="voice">Brand Voice</button>
+  <button class="tab" data-t="autos">Automations</button>
+</nav>
+
+<template id="connectTpl">
+  <div class="card connect" style="margin-bottom:16px">
+    <div class="cfg">
+      <input type="password" class="ghToken" placeholder="Paste your GitHub token (github_pat_…)" autocomplete="off">
+      <button class="btn" data-gh="save">Connect</button>
+      <button class="btn ghost" data-gh="refresh">&#8635; Reload</button>
+      <button class="btn ghost sm" data-gh="forget" title="Remove the saved token from this browser">Forget</button>
+    </div>
+    <div class="status ghStatus" style="margin-top:10px">Not connected. Your clients, anniversaries, calendar, and automation results live in your private GitHub repo. Paste a token once and this page reads and saves them.</div>
+    <p class="hint" style="margin-top:8px">Token stays in this browser only. Make one at github.com &rsaquo; Settings &rsaquo; Developer settings &rsaquo; Fine-grained tokens: repository <b>tayla-brand</b>, permission <b>Contents: Read and write</b>.</p>
+  </div>
+</template>
+
+<div class="wrap">
+
+  <!-- OVERVIEW -->
+  <section class="panel active" id="overview">
+    <div class="quote">&ldquo;Would Tayla actually say this?&rdquo; If the answer is no, rewrite it.
+      <span>The one rule that governs everything here</span></div>
+
+    <div class="stats">
+      <div class="stat"><div class="num">4</div><div class="lbl">Content Pillars</div></div>
+      <div class="stat"><div class="num">5</div><div class="lbl">Auto Tasks Running</div></div>
+      <div class="stat"><div class="num" id="statActive">&ndash;</div><div class="lbl">Active Clients</div></div>
+      <div class="stat"><div class="num" id="statDue">&ndash;</div><div class="lbl">Touchpoints Due (30d)</div></div>
+    </div>
+
+    <div class="section-title">Your brand at a glance</div>
+    <div class="grid g2">
+      <div class="card">
+        <h3>Who you are</h3>
+        <p class="small">Real estate salesperson with Weichert, Staten Island. You make first-time buyers feel educated, comfortable, and confident &mdash; never pressured. Advocate, educator, resource.</p>
+      </div>
+      <div class="card">
+        <h3>Your strongest angle</h3>
+        <p class="small">Staten Island + first-time homebuyers + real estate education + personality + lifestyle + home/design. Every post should connect a few of these.</p>
+      </div>
+      <div class="card">
+        <h3>The lead-gen flow</h3>
+        <p class="small">Value &rarr; Trust &rarr; Personality &rarr; Relationship &rarr; DM &rarr; Client. Attract organically. People should feel like they already know you before they reach out.</p>
+      </div>
+      <div class="card">
+        <h3>What people should think</h3>
+        <p class="small">&ldquo;She actually explains things.&rdquo; &middot; &ldquo;I could text her.&rdquo; &middot; &ldquo;She knows Staten Island.&rdquo; &middot; &ldquo;She&rsquo;s not pressuring me.&rdquo; &middot; &ldquo;I want her to be my agent.&rdquo;</p>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-top:34px">How to use this</div>
+    <div class="card">
+      <p class="small"><b>Clients</b> is your live pipeline: move people through the stages and everything else follows. <b>Anniversaries</b> tracks every closed home and tells you when to send a check-in or a card. <b>Calendar</b> is your month at a glance, color-coded, with closings and anniversaries filled in for you. <b>Content</b> is your idea + hook + CTA library, <b>Brand Voice</b> keeps everything sounding like you, and <b>Automations</b> shows what the background tasks produced this week. You can edit clients, anniversaries, and events here or just tell Claude in chat; both save to the same place.</p>
+    </div>
+  </section>
+
+  <!-- CLIENTS -->
+  <section class="panel" id="clients">
+    <div class="connect-slot"></div>
+    <div class="hubbar">
+      <p class="lead" style="margin:0">Your pipeline, left to right. Change the status on a card and it saves on its own.</p>
+      <div class="tools"><span class="sync">Not connected</span><button class="btn" data-add="client">+ Add client</button></div>
+    </div>
+    <div id="clientList"><div class="empty">Connect above to load your clients.</div></div>
+  </section>
+
+  <!-- ANNIVERSARIES -->
+  <section class="panel" id="anniversaries">
+    <div class="connect-slot"></div>
+    <div class="hubbar">
+      <p class="lead" style="margin:0">Every closed home. Add your past clients by hand; new closings land here automatically.</p>
+      <div class="tools"><span class="sync">Not connected</span><button class="btn" data-add="anniv">+ Add past client</button></div>
+    </div>
+    <div class="section-title">Coming up in the next 30 days</div>
+    <div class="card" id="upcomingList"><div class="empty">Connect above to see what&rsquo;s due.</div></div>
+    <div class="section-title" style="margin-top:30px">All closed homes</div>
+    <div class="card" id="annivList"><div class="empty">&nbsp;</div></div>
+    <div class="note"><b>How the reminders work:</b> 1 month after closing you get a check-in text to send. 6 months after, a check-in email. Three weeks before every anniversary, a card reminder. Each Monday the Client Touchpoints task drafts anything due that week in your voice and pings your phone.</div>
+  </section>
+
+  <!-- CALENDAR -->
+  <section class="panel" id="calendar">
+    <div class="connect-slot"></div>
+    <div class="caltools">
+      <div style="display:flex;align-items:center;gap:8px">
+        <button class="btn ghost sm" data-cal="prev">&#8249;</button>
+        <div class="label" id="calLabel"></div>
+        <button class="btn ghost sm" data-cal="next">&#8250;</button>
+        <button class="btn ghost sm" data-cal="today">Today</button>
+      </div>
+      <div class="tools" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        <span class="sync">Not connected</span>
+        <div class="seg"><button class="on" data-view="month">Month</button><button data-view="year">Year</button></div>
+        <button class="btn" data-add="event">+ Add event</button>
+      </div>
+    </div>
+    <div class="legend"><span class="c-showings">Showings &amp; appointments</span><span class="c-closings">Closings &amp; deadlines</span><span class="c-marketing">Open houses &amp; marketing</span><span class="c-anniversary">Home anniversaries (automatic)</span></div>
+    <div id="calGrid"></div>
+    <p class="hint">Click any day to see or add events. Dashed items come from your Clients and Anniversaries and can&rsquo;t be edited here.</p>
+  </section>
+
+  <!-- CONTENT -->
+  <section class="panel" id="content">
+    <p class="lead">What to make, how to hook, and how to close. Build every caption as <b>Hook &rarr; Body &rarr; CTA</b>.</p>
+
+    <div class="section-title">The 4 pillars</div>
+    <div class="grid g2">
+      <div class="card"><span class="pill p-edu">Pillar 1 · Anchor</span><h3>First-time buyer education</h3><p class="small">One concept per post, explained simply with a real number example. This builds the &ldquo;she actually explains things&rdquo; reputation.</p>
+        <ul><li>Pre-approval vs. pre-qualification</li><li>You don&rsquo;t need 20% down</li><li>Closing costs &amp; earnest money</li><li>FHA vs. conventional vs. VA</li><li>What&rsquo;s actually in your monthly payment</li><li>HomeFirst &amp; first-time buyer programs</li></ul>
+      </div>
+      <div class="card"><span class="pill p-local">Pillar 2</span><h3>Staten Island local / lifestyle</h3><p class="small">Neighborhoods and local businesses. Makes the page feel like home, not a billboard.</p>
+        <ul><li>Neighborhood spotlights (West Brighton, Great Kills, Mid-Island)</li><li>Local business features</li><li>Where to eat / coffee / things to do</li><li>Why people love the Island</li></ul>
+      </div>
+      <div class="card"><span class="pill p-home">Pillar 3</span><h3>Home &amp; design (your house)</h3><p class="small">West Brighton reno &mdash; warm, classic, collected. Before/afters and &ldquo;here&rsquo;s what I chose and why&rdquo; do great.</p>
+        <ul><li>Paint picks (Alabaster, Greek Villa)</li><li>Brass hardware &amp; lighting</li><li>Working with a 1920s home</li><li>Design decisions + the why</li></ul>
+      </div>
+      <div class="card"><span class="pill p-personal">Pillar 4</span><h3>Personal / realtor life</h3><p class="small">Client wins, day-in-the-life, honest moments, Bodie, humor.</p>
+        <ul><li>&ldquo;Real estate is not for the weak &#128517;&rdquo;</li><li>Client closing wins</li><li>Behind-the-scenes of a showing</li><li>What nobody tells you about this job</li></ul>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-top:34px">Hook library <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);font-family:serif;font-size:13px">&mdash; tap to copy</span></div>
+    <div class="chips">
+      <span class="chip copy">Buying a home is HARD right now&hellip; but it doesn&rsquo;t HAVE to be &#128527;</span>
+      <span class="chip copy">Nobody tells you this when you&rsquo;re buying your first house&hellip;</span>
+      <span class="chip copy">Before you start looking at houses, do THIS.</span>
+      <span class="chip copy">If you&rsquo;re a first-time buyer, save this.</span>
+      <span class="chip copy">You don&rsquo;t need 20% down to buy a house.</span>
+      <span class="chip copy">Here&rsquo;s what actually happens after you get pre-approved&hellip;</span>
+      <span class="chip copy">The thing that surprises every first-time buyer on Staten Island&hellip;</span>
+      <span class="chip copy">POV: you thought you couldn&rsquo;t afford a house on Staten Island&hellip;</span>
+    </div>
+
+    <div class="section-title" style="margin-top:34px">CTA bank <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);font-family:serif;font-size:13px">&mdash; tap to copy</span></div>
+    <div class="chips">
+      <span class="chip copy">DM me &lsquo;HOME&rsquo; and I&rsquo;ll send you the info.</span>
+      <span class="chip copy">Save this for when you&rsquo;re ready to buy.</span>
+      <span class="chip copy">Send this to a friend who&rsquo;s house hunting.</span>
+      <span class="chip copy">Have questions? DM me &mdash; I actually answer.</span>
+      <span class="chip copy">Want to know if you qualify? Let&rsquo;s chat.</span>
+      <span class="chip copy">Follow for real estate that actually makes sense.</span>
+    </div>
+
+    <div class="grid g2" style="margin-top:34px">
+      <div class="card">
+        <div class="section-title" style="margin-top:0">Weekly rhythm</div>
+        <table>
+          <tr><th>Day</th><th>Post</th></tr>
+          <tr><td><b>Mon</b></td><td>Education carousel/Reel <span class="badge b-active">Pillar 1</span></td></tr>
+          <tr><td><b>Wed</b></td><td>Local / lifestyle <span class="badge b-warm">Pillar 2</span></td></tr>
+          <tr><td><b>Fri</b></td><td>Home/design or personal <span class="badge b-hot">3 / 4</span></td></tr>
+          <tr><td><b>Daily</b></td><td>Stories: polls, Q&amp;A, BTS</td></tr>
+        </table>
+      </div>
+      <div class="card">
+        <div class="section-title" style="margin-top:0">Before you post</div>
+        <ul class="check">
+          <li><input type="checkbox" id="q1"><label for="q1">Does the hook stop the scroll?</label></li>
+          <li><input type="checkbox" id="q2"><label for="q2">Does it sound like me (not an ad)?</label></li>
+          <li><input type="checkbox" id="q3"><label for="q3">One clear, useful takeaway?</label></li>
+          <li><input type="checkbox" id="q4"><label for="q4">Natural CTA?</label></li>
+          <li><input type="checkbox" id="q5"><label for="q5">Would someone save / share / DM?</label></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- VOICE -->
+  <section class="panel" id="voice">
+    <div class="quote">Your realtor friend who happens to know a LOT about real estate &mdash; not a salesperson trying to sell you a house.
+      <span>Your voice in one line</span></div>
+
+    <div class="section-title">How you sound</div>
+    <div class="card" style="margin-bottom:26px">
+      <p class="small">Casual, warm, enthusiastic, direct, a little playful, confident. You write the way you talk &mdash; short sentences, contractions, real exclamation points, light emoji, the occasional CAPS word for emphasis. Explain things like you&rsquo;re texting a smart friend who&rsquo;s never bought a house: simple first, then the why, then a real example with numbers.</p>
+    </div>
+
+    <div class="section-title">Do &amp; don&rsquo;t</div>
+    <div class="dd">
+      <div class="box do">
+        <h4>Do</h4>
+        <ul>
+          <li>Write like you talk &mdash; &ldquo;Hey!!&rdquo;, contractions, personality</li>
+          <li>Lead with a scroll-stopping hook</li>
+          <li>Explain with real numbers ($750k value &minus; $600k owed = ~$150k equity)</li>
+          <li>Say &ldquo;it depends on the lender/town&rdquo; when it truly does</li>
+          <li>Keep CTAs natural and low-pressure</li>
+          <li>Give one clear, useful takeaway</li>
+        </ul>
+      </div>
+      <div class="box dont">
+        <h4>Never</h4>
+        <ul>
+          <li>&ldquo;Furthermore,&rdquo; &ldquo;leveraging,&rdquo; &ldquo;embarking,&rdquo; &ldquo;at your earliest convenience&rdquo;</li>
+          <li>Clich&eacute;s: &ldquo;dream home,&rdquo; &ldquo;journey,&rdquo; &ldquo;unlock,&rdquo; &ldquo;empower&rdquo;</li>
+          <li>Corporate ad-speak or fake enthusiasm</li>
+          <li>&ldquo;CALL ME TODAY!!!&rdquo; energy</li>
+          <li>A pile of emojis</li>
+          <li>&ldquo;It depends&rdquo; with no actual recommendation</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-top:34px">Sounds like you vs. not</div>
+    <div class="grid g2">
+      <div class="card"><span class="pill p-edu">Client message ✓</span><p class="small">&ldquo;Hey!! I emailed you but I&rsquo;m not sure it&rsquo;s landing in your inbox! I&rsquo;d love to hear where you&rsquo;re at in the homebuying process &#128522;&rdquo;</p></div>
+      <div class="card"><span class="pill p-local">Not you ✕</span><p class="small">&ldquo;Good afternoon. I am following up regarding my previous correspondence and would be happy to schedule a consultation to discuss your homebuying objectives.&rdquo;</p></div>
+    </div>
+
+    <div class="section-title" style="margin-top:34px">Your formulas</div>
+    <div class="grid g3">
+      <div class="card"><h3>Social caption</h3><p class="small">Hook &rarr; Body &rarr; CTA</p></div>
+      <div class="card"><h3>Explaining a concept</h3><p class="small">Simple explanation &rarr; number example &rarr; caveat</p></div>
+      <div class="card"><h3>A decision</h3><p class="small">My pick &rarr; why &rarr; what I&rsquo;d do</p></div>
+    </div>
+  </section>
+
+  <!-- AUTOMATIONS -->
+  <section class="panel" id="autos">
+    <p class="lead">Five tasks run in the cloud &mdash; even when your Mac is closed &mdash; and drop copy-paste-ready work to your phone. You always get the final say: they hand you a strong draft instead of a blank page.</p>
+
+    <div class="connect-slot"></div>
+
+    <div class="section-title">Latest from your automations</div>
+    <div class="grid g2" id="liveGrid">
+      <div class="card live" data-slug="touchpoints" data-title="Client Touchpoints" data-next="Monday 8 AM"></div>
+      <div class="card live" data-slug="content-plan" data-title="Weekly Content Plan" data-next="Monday 7 AM"></div>
+      <div class="card live" data-slug="follow-up-drafts" data-title="Lead Follow-Up Drafts" data-next="Tuesday 9 AM"></div>
+      <div class="card live" data-slug="market-update" data-title="Staten Island Market Update" data-next="Thursday 8 AM"></div>
+      <div class="card live" data-slug="content-prompts" data-title="Weekly Content Prompts" data-next="Sunday 8 AM"></div>
+    </div>
+
+    <div class="section-title" style="margin-top:34px">The schedule</div>
+    <div class="autorow">
+      <div class="day"><div class="d">Sun</div><div class="t">8:00 AM</div></div>
+      <div class="body"><h3>Weekly Content Prompts</h3><p>Seller-weighted, ready-to-film week: Mon seller Reel, Wed buyer carousel, Fri SI life or home reno, Sun flex post, plus hashtag sets. Built for Sunday batch-filming.</p></div>
+    </div>
+    <div class="autorow">
+      <div class="day"><div class="d">Mon</div><div class="t">7:00 AM</div></div>
+      <div class="body"><h3>Weekly Content Plan</h3><p>A full week of content: 4 posts across your pillars with hooks, captions, Reel scripts, CTAs + 3 Story ideas.</p></div>
+    </div>
+    <div class="autorow">
+      <div class="day"><div class="d">Mon</div><div class="t">8:00 AM</div></div>
+      <div class="body"><h3>Client Touchpoints</h3><p>Checks your Anniversaries list for anything due this week &mdash; 1-month check-in, 6-month check-in, anniversary card &mdash; and drafts each message in your voice.</p></div>
+    </div>
+    <div class="autorow">
+      <div class="day"><div class="d">Tue</div><div class="t">9:00 AM</div></div>
+      <div class="body"><h3>Lead Follow-Up Drafts</h3><p>Ready-to-send messages (2 variations each) for quiet leads, expireds, FSBOs, referrals, and stalled pre-approved buyers.</p></div>
+    </div>
+    <div class="autorow">
+      <div class="day"><div class="d">Thu</div><div class="t">8:00 AM</div></div>
+      <div class="body"><h3>Staten Island Market Update</h3><p>Fresh rates + SI market trends turned into a plain-English take, an IG caption, and a client-ready email/text, with sources.</p></div>
+    </div>
+
+    <div class="note"><b>Where else to find results:</b> every run is also a session at <a href="https://claude.ai/code/routines" target="_blank" rel="noopener">claude.ai/code/routines</a>, readable on your Mac or in the Claude mobile app. <br><br><b>Want to tweak them?</b> Just tell Claude &mdash; e.g. &ldquo;move my content plan to Sunday nights,&rdquo; &ldquo;add a seller post to the weekly plan,&rdquo; or &ldquo;make the market update every other week.&rdquo; Times are Eastern; after clocks change Nov 1 they land an hour later unless you ask Claude to shift them. <br><br><b>Ideas to add later:</b> local business spotlight &middot; monthly performance check-in &middot; new-listing launch kit &middot; open house promo package.</div>
+  </section>
+
+</div>
+
+<div class="modal" id="modal" hidden>
+  <div class="sheet" role="dialog" aria-modal="true">
+    <h3 id="modalTitle"></h3>
+    <div id="modalBody"></div>
+    <div class="actions">
+      <button class="btn danger sm" id="modalDelete" hidden>Delete</button>
+      <span class="spacer"></span>
+      <button class="btn ghost" id="modalCancel">Cancel</button>
+      <button class="btn" id="modalSave">Save</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">Copied!</div>
+
+<footer>Tayla&rsquo;s Brand Command Center &middot; Built by Claude &middot; Reference files live in your Desktop &rsaquo; Claude folder</footer>
+
+<script>
+  // ---- tabs ----
+  function showTab(id){
+    document.querySelectorAll('.tab').forEach(function(x){x.classList.toggle('active',x.dataset.t===id)});
+    document.querySelectorAll('.panel').forEach(function(x){x.classList.toggle('active',x.id===id)});
+    if(window.HUB) HUB.onTab(id);
+  }
+  document.querySelectorAll('.tab').forEach(function(b){
+    b.addEventListener('click',function(){showTab(b.dataset.t);window.scrollTo({top:0,behavior:'smooth'});});
+  });
+  // ---- toast + copy chips ----
+  var toast=document.getElementById('toast');
+  function showToast(msg){toast.textContent=msg;toast.classList.add('show');clearTimeout(toast._t);toast._t=setTimeout(function(){toast.classList.remove('show')},1300);}
+  document.querySelectorAll('.chip.copy').forEach(function(c){
+    c.addEventListener('click',function(){
+      var t=c.textContent.trim();
+      if(navigator.clipboard){navigator.clipboard.writeText(t).then(function(){showToast('Copied!')}).catch(function(){showToast('Copied!')});}
+      else{showToast('Copied!');}
+    });
+  });
+  document.querySelectorAll('.check input').forEach(function(cb){
+    cb.addEventListener('change',function(){cb.closest('li').classList.toggle('done',cb.checked);});
+  });
+
+  // ---- shared GitHub connection (token in this browser only) ----
+  var LIVE={owner:'taylaapalase',repo:'tayla-brand',branch:'claude/outputs',key:'tayla_brand_live_v1'};
+  (function(){var tpl=document.getElementById('connectTpl');document.querySelectorAll('.connect-slot').forEach(function(s){s.appendChild(tpl.content.cloneNode(true));});})();
+  function getToken(){try{var r=localStorage.getItem(LIVE.key);return r?JSON.parse(r).token:'';}catch(e){return '';}}
+  function setToken(t){try{if(t)localStorage.setItem(LIVE.key,JSON.stringify({token:t}));else localStorage.removeItem(LIVE.key);}catch(e){}}
+  function setStatus(msg,cls){document.querySelectorAll('.ghStatus').forEach(function(el){el.textContent=msg;el.className='status ghStatus'+(cls?' '+cls:'');});}
+  function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+  function ghHeaders(tok,raw){return {'Authorization':'Bearer '+tok,'Accept':raw?'application/vnd.github.raw+json':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28'};}
+  function fmtDate(iso){try{return new Date(iso).toLocaleString(undefined,{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});}catch(e){return iso;}}
+  document.addEventListener('click',function(e){
+    var b=e.target.closest('[data-gh]'); if(!b) return;
+    var card=b.closest('.connect'), act=b.dataset.gh;
+    if(act==='save'){var inp=card.querySelector('.ghToken');var t=inp.value.trim();if(!t){setStatus('Paste a token first.','err');return;}setToken(t);inp.value='';refreshAll();}
+    else if(act==='refresh'){refreshAll();}
+    else if(act==='forget'){setToken('');setStatus('Token removed from this browser.');refreshAll();}
+  });
+  document.addEventListener('keydown',function(e){if(e.key==='Enter'&&e.target.classList&&e.target.classList.contains('ghToken')){e.target.closest('.connect').querySelector('[data-gh="save"]').click();}});
+
+  // ---- markdown (for automation outputs) ----
+  function inline(s){
+    s=esc(s);
+    s=s.replace(/`([^`]+)`/g,function(_,c){return '<code>'+c+'</code>';});
+    s=s.replace(/\*\*([^*]+)\*\*/g,'<b>$1</b>').replace(/__([^_]+)__/g,'<b>$1</b>');
+    s=s.replace(/(^|[^*])\*([^*\n]+)\*/g,'$1<i>$2</i>');
+    s=s.replace(/\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g,'<a href="$2" target="_blank" rel="noopener">$1</a>');
+    return s;
+  }
+  function mdToHtml(md){
+    var lines=md.replace(/\r/g,'').split('\n'),out=[],i=0,list=null,quote=[],para=[];
+    function flushPara(){if(para.length){out.push('<p>'+inline(para.join(' '))+'</p>');para=[];}}
+    function flushList(){if(list){out.push('</'+list+'>');list=null;}}
+    function flushQuote(){if(quote.length){out.push('<blockquote>'+mdToHtml(quote.join('\n'))+'</blockquote>');quote=[];}}
+    function flushAll(){flushPara();flushList();flushQuote();}
+    while(i<lines.length){
+      var l=lines[i];
+      if(/^```/.test(l)){flushAll();var code=[];i++;while(i<lines.length&&!/^```/.test(lines[i])){code.push(lines[i]);i++;}out.push('<pre><code>'+esc(code.join('\n'))+'</code></pre>');i++;continue;}
+      var m;
+      if((m=l.match(/^(#{1,6})\s+(.*)$/))){flushAll();var n=m[1].length;out.push('<h'+n+'>'+inline(m[2])+'</h'+n+'>');i++;continue;}
+      if(/^\s*(-{3,}|\*{3,}|_{3,})\s*$/.test(l)){flushAll();out.push('<hr>');i++;continue;}
+      if((m=l.match(/^>\s?(.*)$/))){flushPara();flushList();quote.push(m[1]);i++;continue;} else flushQuote();
+      if((m=l.match(/^\s*[-*+]\s+(.*)$/))){flushPara();if(list!=='ul'){flushList();out.push('<ul>');list='ul';}out.push('<li>'+inline(m[1])+'</li>');i++;continue;}
+      if((m=l.match(/^\s*\d+[.)]\s+(.*)$/))){flushPara();if(list!=='ol'){flushList();out.push('<ol>');list='ol';}out.push('<li>'+inline(m[1])+'</li>');i++;continue;}
+      if(/^\s*$/.test(l)){flushAll();i++;continue;}
+      flushList();para.push(l.trim());i++;
+    }
+    flushAll();return out.join('\n');
+  }
+  function renderCard(card,state){
+    var title=card.dataset.title,slug=card.dataset.slug,next=card.dataset.next;
+    var gh='https://github.com/'+LIVE.owner+'/'+LIVE.repo+'/blob/'+LIVE.branch+'/outputs/'+slug+'/latest.md';
+    var meta=state.updated?('Updated '+fmtDate(state.updated)):(state.md?'':('Next run: '+next));
+    var html='<div class="head"><div><h3>'+esc(title)+'</h3><div class="meta">'+esc(meta)+'</div></div><div class="tools">';
+    if(state.md){html+='<button class="btn sm ghost" data-copy="'+slug+'">Copy</button><a class="btn sm ghost" href="'+gh+'" target="_blank" rel="noopener">GitHub</a>';}
+    html+='</div></div>';
+    if(state.md){html+='<div class="md">'+mdToHtml(state.md)+'</div>';}
+    else{html+='<div class="md empty">'+esc(state.msg||'')+'</div>';}
+    card.innerHTML=html;card._md=state.md||'';
+    var cb=card.querySelector('[data-copy]');
+    if(cb){cb.addEventListener('click',function(){var t=card._md;if(navigator.clipboard){navigator.clipboard.writeText(t).then(function(){showToast('Copied!')}).catch(function(){showToast('Copy failed')});}});}
+  }
+  function loadCard(card,tok){
+    var slug=card.dataset.slug,base='https://api.github.com/repos/'+LIVE.owner+'/'+LIVE.repo;
+    var path='outputs/'+slug+'/latest.md';
+    renderCard(card,{msg:'Loading…'});
+    return fetch(base+'/contents/'+path+'?ref='+encodeURIComponent(LIVE.branch)+'&t='+Date.now(),{headers:ghHeaders(tok,true),cache:'no-store'})
+      .then(function(r){
+        if(r.status===404){renderCard(card,{msg:'No output saved yet. It appears here after the next run.'});return null;}
+        if(r.status===401||r.status===403){throw new Error('auth');}
+        if(!r.ok){throw new Error('http '+r.status);}
+        return r.text();
+      })
+      .then(function(md){
+        if(md===null)return;
+        return fetch(base+'/commits?path='+encodeURIComponent(path)+'&sha='+encodeURIComponent(LIVE.branch)+'&per_page=1&t='+Date.now(),{headers:ghHeaders(tok,false),cache:'no-store'})
+          .then(function(r){return r.ok?r.json():[];}).catch(function(){return [];})
+          .then(function(c){var when=(c&&c[0]&&c[0].commit&&c[0].commit.committer)?c[0].commit.committer.date:null;renderCard(card,{md:md,updated:when});});
+      });
+  }
+  function refreshAll(){
+    var tok=getToken();
+    var cards=document.querySelectorAll('.card.live');
+    if(window.HUB) HUB.pullAll();
+    if(!tok){cards.forEach(function(c){renderCard(c,{msg:'Connect with your GitHub token to see this here. Next run: '+c.dataset.next+'.'});});return;}
+    setStatus('Checking GitHub…');
+    Promise.all(Array.prototype.map.call(cards,function(c){return loadCard(c,tok);}))
+      .then(function(){setStatus('Connected to '+LIVE.owner+'/'+LIVE.repo+' · refreshed '+new Date().toLocaleTimeString(),'ok');})
+      .catch(function(e){
+        var msg=(e&&e.message==='auth')?'GitHub rejected the token. Check it covers tayla-brand with Contents: Read and write, and hasn’t expired.':'Couldn’t reach GitHub ('+(e&&e.message)+'). Try Reload.';
+        setStatus(msg,'err');
+        cards.forEach(function(c){if(!c._md)renderCard(c,{msg:'—'});});
+      });
+  }
+</script>
+
+<script>
+// ===================== HUB: clients · anniversaries · calendar =====================
+window.HUB=(function(){
+  var OWNER='taylaapalase', REPO='tayla-brand', BRANCH='main';
+  var STATUSES=[
+    {key:'preapproved',label:'Pre-approved',color:'#8A6D3F'},
+    {key:'active',label:'Active',color:'#47583F'},
+    {key:'offer',label:'Offer Accepted',color:'#9A5433'},
+    {key:'attorney',label:'Attorney Review',color:'#5A5075'},
+    {key:'contract',label:'In Contract',color:'#B5714E'},
+    {key:'closed',label:'Closed',color:'#3E6B4E'}
+  ];
+  var TYPES={showings:'Showings & appointments',closings:'Closings & deadlines',marketing:'Open houses & marketing',anniversary:'Home anniversary'};
+  var FILES={clients:{path:'data/clients.json',root:'clients'},anniversaries:{path:'data/anniversaries.json',root:'anniversaries'},events:{path:'data/events.json',root:'events'}};
+  var S={}; Object.keys(FILES).forEach(function(k){S[k]={items:[],sha:null,dirty:false,pendingDeletes:{},timer:null,loaded:false};});
+  var currentTab='overview';
+  var view={mode:'month',y:0,m:0};
+
+  // ---- helpers ----
+  function statusOf(k){for(var i=0;i<STATUSES.length;i++)if(STATUSES[i].key===k)return STATUSES[i];return STATUSES[0];}
+  function uid(p){return p+Date.now().toString(36)+Math.random().toString(36).slice(2,4);}
+  function nowISO(){return new Date().toISOString();}
+  function b64enc(str){return btoa(unescape(encodeURIComponent(str)));}
+  function b64dec(b){return decodeURIComponent(escape(atob((b||'').replace(/\s/g,''))));}
+  function money(n){if(n===null||n===undefined||n==='')return '';var v=Number(n);if(isNaN(v))return '';return '$'+v.toLocaleString();}
+  function isYMD(s){return /^\d{4}-\d{2}-\d{2}$/.test(s||'');}
+  function P(ymd){var a=ymd.split('-').map(Number);return new Date(a[0],a[1]-1,a[2]);}
+  function F(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+  function dim(y,m){return new Date(y,m+1,0).getDate();}
+  function todayYMD(){try{return new Intl.DateTimeFormat('en-CA',{timeZone:'America/New_York',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());}catch(e){return F(new Date());}}
+  function addDays(ymd,n){var d=P(ymd);d.setDate(d.getDate()+n);return F(d);}
+  function addMonthsClamped(ymd,n){var d=P(ymd);var t=new Date(d.getFullYear(),d.getMonth()+n,1);var yy=t.getFullYear(),mm=t.getMonth();return F(new Date(yy,mm,Math.min(d.getDate(),dim(yy,mm))));}
+  function annivOn(ymd,year){var d=P(ymd);var m=d.getMonth();return F(new Date(year,m,Math.min(d.getDate(),dim(year,m))));}
+  function fmtLong(ymd){return P(ymd).toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric',year:'numeric'});}
+  function fmtMed(ymd){return P(ymd).toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'});}
+  function fmtShort(ymd){return P(ymd).toLocaleDateString(undefined,{month:'short',day:'numeric'});}
+  function fmtTime(t){if(!t)return '';var a=t.split(':');var h=+a[0],mi=a[1]||'00';var ap=h>=12?'PM':'AM';h=h%12;if(h===0)h=12;return h+':'+mi+' '+ap;}
+  function daysUntil(ymd){var t=P(todayYMD()),d=P(ymd);return Math.round((d-t)/86400000);}
+
+  // ---- persistence ----
+  function url(key){return 'https://api.github.com/repos/'+OWNER+'/'+REPO+'/contents/'+FILES[key].path;}
+  function hdr(tok){return {'Authorization':'Bearer '+tok,'Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28'};}
+  function wrap(key){var o={version:1};o[FILES[key].root]=S[key].items;return o;}
+  function fetchRemote(key,tok){
+    return fetch(url(key)+'?ref='+BRANCH+'&t='+Date.now(),{headers:hdr(tok),cache:'no-store'}).then(function(r){
+      if(r.status===404)return {items:[],sha:null};
+      if(r.status===401||r.status===403)throw new Error('auth');
+      if(!r.ok)throw new Error('http '+r.status);
+      return r.json().then(function(j){
+        var items;
+        try{var o=JSON.parse(b64dec(j.content));items=Array.isArray(o)?o:(o[FILES[key].root]||[]);}catch(e){throw new Error('parse');}
+        return {items:items,sha:j.sha};
+      });
+    });
+  }
+  function anyDirty(){return Object.keys(S).some(function(k){return S[k].dirty||S[k].timer;});}
+  function pullAll(){
+    var tok=getToken();
+    if(!tok){Object.keys(S).forEach(function(k){S[k].loaded=false;});renderSync('none');renderCurrent();renderOverview();return Promise.resolve();}
+    if(anyDirty())return Promise.resolve();
+    renderSync('loading');
+    return Promise.all(Object.keys(S).map(function(k){return fetchRemote(k,tok).then(function(r){S[k].items=r.items;S[k].sha=r.sha;S[k].loaded=true;});}))
+      .then(function(){renderSync('saved');renderCurrent();renderOverview();})
+      .catch(function(e){renderSync(e.message==='auth'?'auth':e.message==='parse'?'parse':'offline');renderCurrent();renderOverview();});
+  }
+  function mergeById(local,remote,dels){
+    var out=[],seen={};
+    local.forEach(function(it){seen[it.id]=true;});
+    var rmap={};remote.forEach(function(it){rmap[it.id]=it;});
+    local.forEach(function(it){var r=rmap[it.id];if(r&&(r.updatedAt||'')>(it.updatedAt||''))out.push(r);else out.push(it);});
+    remote.forEach(function(it){if(!seen[it.id]&&!dels[it.id])out.push(it);});
+    return out;
+  }
+  function queueSave(key,msg){
+    S[key].dirty=true;renderSync('saving');
+    clearTimeout(S[key].timer);
+    S[key].timer=setTimeout(function(){S[key].timer=null;pushFile(key,msg,false);},800);
+  }
+  function pushFile(key,msg,retried){
+    var tok=getToken();if(!tok){renderSync('none');return Promise.resolve();}
+    var body={message:msg||'Dashboard: update '+key,branch:BRANCH,content:b64enc(JSON.stringify(wrap(key),null,2)+'\n')};
+    if(S[key].sha)body.sha=S[key].sha;
+    return fetch(url(key),{method:'PUT',headers:hdr(tok),body:JSON.stringify(body)}).then(function(r){
+      if(r.status===409||r.status===422){
+        if(retried)throw new Error('conflict');
+        return fetchRemote(key,tok).then(function(rem){S[key].items=mergeById(S[key].items,rem.items,S[key].pendingDeletes);S[key].sha=rem.sha;renderCurrent();return pushFile(key,msg,true);});
+      }
+      if(r.status===401||r.status===403)throw new Error('auth');
+      if(!r.ok)throw new Error('http '+r.status);
+      return r.json().then(function(j){S[key].sha=j.content.sha;S[key].dirty=false;S[key].pendingDeletes={};renderSync('saved');});
+    }).catch(function(e){
+      if(e.message==='auth'){renderSync('auth');setStatus('GitHub rejected the save. This token is probably read-only. Make a new one with Contents: Read and write on tayla-brand.','err');}
+      else if(e.message==='conflict')renderSync('conflict');
+      else renderSync('offline');
+    });
+  }
+  function renderSync(state){
+    var map={none:['Not connected',''],loading:['Loading…','saving'],saving:['Saving…','saving'],saved:['Saved','saved'],offline:['Offline, changes not saved','err'],conflict:['Conflict, tap Reload','err'],auth:['Token rejected or read-only','err'],parse:['Data file unreadable','err']};
+    var v=map[state]||map.none;
+    document.querySelectorAll('.sync').forEach(function(el){el.textContent=v[0];el.className='sync'+(v[1]?' '+v[1]:'');});
+  }
+  setInterval(function(){if(getToken()&&!anyDirty()&&document.visibilityState==='visible')pullAll();},90000);
+  document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible'&&getToken()&&!anyDirty())pullAll();});
+  window.addEventListener('beforeunload',function(e){if(anyDirty()){e.preventDefault();e.returnValue='';}});
+
+  // ---- derived logic ----
+  function touchpoints(a,start,end){
+    if(!isYMD(a.closingDate))return [];
+    var out=[],C=a.closingDate;
+    var one=addMonthsClamped(C,1),six=addMonthsClamped(C,6);
+    if(one>=start&&one<=end)out.push({due:one,kind:'1mo',label:'1-month check-in',a:a});
+    if(six>=start&&six<=end)out.push({due:six,kind:'6mo',label:'6-month check-in',a:a});
+    var y0=P(C).getFullYear(),endY=P(end).getFullYear()+1;
+    for(var y=y0+1;y<=endY;y++){
+      var an=annivOn(C,y),due=addDays(an,-21),n=y-y0;
+      if(due>=start&&due<=end)out.push({due:due,kind:'card',label:'Send anniversary card ('+n+(n===1?' year':' years')+')',years:n,anniv:an,a:a});
+      if(an>=start&&an<=end)out.push({due:an,kind:'anniv',label:'Home anniversary ('+n+(n===1?' year':' years')+')',years:n,anniv:an,a:a});
+    }
+    return out;
+  }
+  function upcoming(days){
+    var start=todayYMD(),end=addDays(start,days),out=[];
+    S.anniversaries.items.forEach(function(a){touchpoints(a,start,end).forEach(function(t){if(t.kind!=='anniv')out.push(t);});});
+    out.sort(function(x,y){return x.due<y.due?-1:x.due>y.due?1:0;});
+    return out;
+  }
+  function derived(start,end){
+    var out=[];
+    S.clients.items.forEach(function(c){
+      if(isYMD(c.contractDate)&&c.contractDate>=start&&c.contractDate<=end)out.push({id:'d_ct_'+c.id,date:c.contractDate,time:'',title:'Contract: '+c.name,type:'closings',derived:true,ref:'clients'});
+      if(isYMD(c.closingDate)&&c.closingDate>=start&&c.closingDate<=end)out.push({id:'d_cl_'+c.id,date:c.closingDate,time:'',title:'Closing: '+c.name,type:'closings',derived:true,ref:'clients'});
+    });
+    S.anniversaries.items.forEach(function(a){
+      touchpoints(a,start,end).forEach(function(t){
+        var pre=t.kind==='anniv'?'Home anniversary: ':t.kind==='card'?'Card due: ':t.kind==='1mo'?'1-mo check-in: ':'6-mo check-in: ';
+        out.push({id:'d_a_'+t.kind+'_'+a.id+'_'+t.due,date:t.due,time:'',title:pre+a.name,type:'anniversary',derived:true,ref:'anniversaries'});
+      });
+    });
+    return out;
+  }
+  function eventsInRange(start,end){
+    var st=S.events.items.filter(function(e){return isYMD(e.date)&&e.date>=start&&e.date<=end;});
+    return st.concat(derived(start,end)).sort(function(x,y){if(x.date!==y.date)return x.date<y.date?-1:1;var a=x.time||'99',b=y.time||'99';return a<b?-1:a>b?1:0;});
+  }
+
+  // ---- renderers ----
+  function renderCurrent(){if(currentTab==='clients')renderClients();else if(currentTab==='anniversaries')renderAnniv();else if(currentTab==='calendar')renderCalendar();}
+  function connected(){return !!getToken()&&S.clients.loaded;}
+  function emptyMsg(){return getToken()?'<div class="empty">Loading…</div>':'<div class="empty">Connect above to load this.</div>';}
+
+  function renderOverview(){
+    var a=document.getElementById('statActive'),d=document.getElementById('statDue');
+    if(!connected()){a.innerHTML='&ndash;';d.innerHTML='&ndash;';return;}
+    a.textContent=S.clients.items.filter(function(c){return c.status!=='closed';}).length;
+    d.textContent=upcoming(30).length;
+  }
+
+  function renderClients(){
+    var el=document.getElementById('clientList');
+    if(!connected()){el.innerHTML=emptyMsg();return;}
+    if(!S.clients.items.length){el.innerHTML='<div class="empty">No clients yet. Click <b>+ Add client</b>, or tell Claude “add buyer Jane Doe, pre-approved 650k.”</div>';return;}
+    var html='';
+    STATUSES.forEach(function(st){
+      var list=S.clients.items.filter(function(c){return c.status===st.key;}).sort(function(x,y){return (x.name||'').localeCompare(y.name||'');});
+      html+='<div class="lane"><h4 style="color:'+st.color+'">'+esc(st.label)+'<span class="cnt">'+list.length+'</span></h4>';
+      if(!list.length){html+='<div class="empty" style="padding:4px 0 2px">—</div>';}
+      else{
+        html+='<div class="cgrid">';
+        list.forEach(function(c){
+          var opts=STATUSES.map(function(s){return '<option value="'+s.key+'"'+(s.key===c.status?' selected':'')+'>'+esc(s.label)+'</option>';}).join('');
+          var meta=[];
+          if(c.address)meta.push(esc(c.address));
+          if(c.price!==null&&c.price!==undefined&&c.price!=='')meta.push('<b>'+money(c.price)+'</b>'+(c.type==='buyer'?' approved':''));
+          if(isYMD(c.contractDate))meta.push('Contract '+fmtShort(c.contractDate));
+          if(isYMD(c.closingDate))meta.push((c.status==='closed'?'Closed ':'Closing ')+fmtMed(c.closingDate));
+          html+='<div class="ccard" style="border-left-color:'+st.color+'">'
+            +'<div class="top"><div class="name">'+esc(c.name)+'</div><span class="type">'+esc(c.type||'buyer')+'</span></div>'
+            +(meta.length?'<div class="meta">'+meta.join(' · ')+'</div>':'')
+            +(c.notes?'<div class="notes">'+esc(c.notes)+'</div>':'')
+            +'<div class="row"><select data-move="'+esc(c.id)+'">'+opts+'</select><button class="btn ghost tiny" data-edit="client:'+esc(c.id)+'">Edit</button></div>'
+            +'</div>';
+        });
+        html+='</div>';
+      }
+      html+='</div>';
+    });
+    el.innerHTML=html;
+  }
+
+  function renderAnniv(){
+    var up=document.getElementById('upcomingList'),all=document.getElementById('annivList');
+    if(!connected()){up.innerHTML=emptyMsg();all.innerHTML='';return;}
+    var list=upcoming(30);
+    if(!list.length){up.innerHTML='<div class="empty">Nothing due in the next 30 days.</div>';}
+    else{
+      up.innerHTML=list.map(function(t){
+        var n=daysUntil(t.due);var when=n===0?'Today':n===1?'Tomorrow':'In '+n+' days';
+        var sub=t.a.address?esc(t.a.address):'';
+        if(t.kind==='card')sub+=(sub?' · ':'')+'Anniversary is '+fmtMed(t.anniv);
+        return '<div class="tp"><div class="when">'+esc(when)+'<small>'+esc(fmtShort(t.due))+'</small></div><div class="what"><b>'+esc(t.a.name)+'</b><span class="kind">'+esc(t.label)+'</span><div class="sub">'+sub+'</div></div></div>';
+      }).join('');
+    }
+    var items=S.anniversaries.items.slice().sort(function(x,y){return (y.closingDate||'')<(x.closingDate||'')?-1:1;});
+    if(!items.length){all.innerHTML='<div class="empty">No closed homes yet. Add your past clients with <b>+ Add past client</b>. New closings appear here on their own.</div>';return;}
+    all.innerHTML=items.map(function(a){
+      var yrs='';
+      if(isYMD(a.closingDate)){var t=P(todayYMD()),c=P(a.closingDate);var n=t.getFullYear()-c.getFullYear()-((t.getMonth()<c.getMonth()||(t.getMonth()===c.getMonth()&&t.getDate()<c.getDate()))?1:0);yrs=n<=0?'Under a year in the home':n+(n===1?' year':' years')+' in the home';}
+      return '<div class="arow"><div><b>'+esc(a.name)+'</b><div class="sub">'+(a.address?esc(a.address)+' · ':'')+(isYMD(a.closingDate)?'Closed '+fmtMed(a.closingDate):'')+(yrs?' · '+yrs:'')+(a.note?' · '+esc(a.note):'')+'</div></div><button class="btn ghost tiny" data-edit="anniv:'+esc(a.id)+'">Edit</button></div>';
+    }).join('');
+  }
+
+  var MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  var DOW=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  function renderCalendar(){
+    var el=document.getElementById('calGrid'),label=document.getElementById('calLabel');
+    document.querySelectorAll('[data-view]').forEach(function(b){b.classList.toggle('on',b.dataset.view===view.mode);});
+    var today=todayYMD();
+    if(view.mode==='month'){
+      label.textContent=MONTHS[view.m]+' '+view.y;
+      var off=new Date(view.y,view.m,1).getDay();
+      var start=F(new Date(view.y,view.m,1-off)),end=F(new Date(view.y,view.m,1-off+41));
+      var evs=connected()?eventsInRange(start,end):[],by={};
+      evs.forEach(function(e){(by[e.date]=by[e.date]||[]).push(e);});
+      var html='<div class="cal">'+DOW.map(function(d){return '<div class="dow">'+d+'</div>';}).join('');
+      for(var i=0;i<42;i++){
+        var d=new Date(view.y,view.m,1-off+i),ymd=F(d),list=by[ymd]||[];
+        var cls='cell'+(d.getMonth()!==view.m?' other':'')+(ymd===today?' today':'');
+        html+='<div class="'+cls+'" data-day="'+ymd+'"><div class="dn">'+d.getDate()+'</div>';
+        list.slice(0,3).forEach(function(e){html+='<span class="ev ev-'+e.type+(e.derived?' derived':'')+'" title="'+esc(e.title)+'">'+(e.time?esc(fmtTime(e.time))+' ':'')+esc(e.title)+'</span>';});
+        if(list.length>3)html+='<div class="more">+'+(list.length-3)+' more</div>';
+        if(list.length){html+='<div class="dots">'+list.slice(0,6).map(function(e){return '<i class="ev-'+e.type+'"></i>';}).join('')+'</div>';}
+        html+='</div>';
+      }
+      el.innerHTML=html+'</div>';
+    }else{
+      label.textContent=String(view.y);
+      var html2='<div class="year">';
+      for(var m=0;m<12;m++){
+        var off2=new Date(view.y,m,1).getDay(),n=dim(view.y,m);
+        var s2=F(new Date(view.y,m,1)),e2=F(new Date(view.y,m,n));
+        var evs2=connected()?eventsInRange(s2,e2):[],by2={};
+        evs2.forEach(function(e){(by2[e.date]=by2[e.date]||[]).push(e);});
+        html2+='<div class="mini" data-month="'+m+'"><h5>'+MONTHS[m]+'</h5><div class="mg">'+DOW.map(function(d){return '<div class="md">'+d[0]+'</div>';}).join('');
+        for(var k=0;k<off2;k++)html2+='<div class="d other"></div>';
+        for(var day=1;day<=n;day++){
+          var ymd2=F(new Date(view.y,m,day)),l2=by2[ymd2]||[];
+          var types={};l2.forEach(function(e){types[e.type]=true;});
+          html2+='<div class="d'+(ymd2===today?' today':'')+'">'+day+'<div class="dt">'+Object.keys(types).slice(0,3).map(function(t){return '<i class="ev-'+t+'"></i>';}).join('')+'</div></div>';
+        }
+        html2+='</div></div>';
+      }
+      el.innerHTML=html2+'</div>';
+    }
+  }
+
+  // ---- modal / forms ----
+  var modal=document.getElementById('modal'),mTitle=document.getElementById('modalTitle'),mBody=document.getElementById('modalBody'),mSave=document.getElementById('modalSave'),mDel=document.getElementById('modalDelete'),mCancel=document.getElementById('modalCancel');
+  var M=null;
+  function fld(label,name,type,value,extra){
+    extra=extra||{};
+    var inner;
+    if(type==='select'){inner='<select name="'+name+'">'+extra.options.map(function(o){return '<option value="'+esc(o[0])+'"'+(o[0]===value?' selected':'')+'>'+esc(o[1])+'</option>';}).join('')+'</select>';}
+    else if(type==='textarea'){inner='<textarea name="'+name+'" placeholder="'+esc(extra.ph||'')+'">'+esc(value||'')+'</textarea>';}
+    else{inner='<input name="'+name+'" type="'+type+'" value="'+esc(value==null?'':value)+'" placeholder="'+esc(extra.ph||'')+'"'+(extra.step?' step="'+extra.step+'"':'')+'>';}
+    return '<div class="field"><label>'+esc(label)+'</label>'+inner+'</div>';
+  }
+  function openModal(cfg){
+    M=cfg;mTitle.textContent=cfg.title;mBody.innerHTML=cfg.body;
+    mDel.hidden=!cfg.onDelete;mSave.hidden=!cfg.onSave;mSave.textContent=cfg.saveLabel||'Save';
+    modal.hidden=false;
+    var f=mBody.querySelector(cfg.focus?'[name="'+cfg.focus+'"]':'input,select,textarea');if(f)setTimeout(function(){f.focus();},30);
+  }
+  function closeModal(){modal.hidden=true;M=null;}
+  function val(n){var e=mBody.querySelector('[name="'+n+'"]');return e?e.value.trim():'';}
+  mCancel.addEventListener('click',closeModal);
+  modal.addEventListener('click',function(e){if(e.target===modal)closeModal();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!modal.hidden)closeModal();});
+  mSave.addEventListener('click',function(){if(M&&M.onSave&&M.onSave()!==false)closeModal();});
+  mDel.addEventListener('click',function(){if(M&&M.onDelete&&confirm('Delete this? This can’t be undone.')){M.onDelete();closeModal();}});
+
+  function clientForm(c,opts){
+    c=c||{};opts=opts||{};
+    var isNew=!c.id;
+    var body=fld('Name','name','text',c.name,{ph:'e.g. The Rivera family'})
+      +'<div class="frow">'+fld('Buyer or seller','type','select',c.type||'buyer',{options:[['buyer','Buyer'],['seller','Seller']]})+fld('Status','status','select',opts.status||c.status||'preapproved',{options:STATUSES.map(function(s){return [s.key,s.label];})})+'</div>'
+      +fld('Property address','address','text',c.address,{ph:'Street, neighborhood'})
+      +fld((c.type==='seller')?'List / contract price':'Price or approved-up-to','price','number',c.price==null?'':c.price,{ph:'650000',step:'1000'})
+      +'<div class="frow">'+fld('Contract date','contractDate','date',c.contractDate)+fld('Closing date','closingDate','date',opts.closingDate||c.closingDate)+'</div>'
+      +fld('Notes','notes','textarea',c.notes,{ph:'Lender, attorney, next step…'});
+    openModal({title:isNew?'Add client':'Edit client',body:body,focus:opts.focus,
+      onSave:function(){
+        var name=val('name');if(!name){alert('Name is required.');return false;}
+        var status=val('status'),closing=val('closingDate');
+        if(status==='closed'&&!isYMD(closing)){alert('Add the closing date so the anniversary reminders work.');mBody.querySelector('[name="closingDate"]').focus();return false;}
+        var price=val('price');
+        var now=nowISO();
+        var obj=isNew?{id:uid('c_'),createdAt:now}:c;
+        obj.name=name;obj.type=val('type');obj.status=status;obj.address=val('address');obj.price=price===''?null:Number(price);obj.contractDate=val('contractDate');obj.closingDate=closing;obj.notes=val('notes');obj.updatedAt=now;
+        if(isNew)S.clients.items.push(obj);
+        queueSave('clients','Dashboard: '+(isNew?'add client ':'update client ')+name);
+        syncAnniversary(obj);
+        renderClients();renderOverview();showToast(isNew?'Client added':'Saved');
+      },
+      onDelete:isNew?null:function(){
+        S.clients.items=S.clients.items.filter(function(x){return x.id!==c.id;});S.clients.pendingDeletes[c.id]=true;
+        queueSave('clients','Dashboard: delete client '+c.name);renderClients();renderOverview();showToast('Client removed');
+      }});
+  }
+  function syncAnniversary(c){
+    var ex=null;S.anniversaries.items.forEach(function(a){if(a.clientId===c.id)ex=a;});
+    if(ex){
+      if(ex.name!==c.name||ex.address!==c.address||ex.closingDate!==c.closingDate){ex.name=c.name;ex.address=c.address;ex.closingDate=c.closingDate;ex.updatedAt=nowISO();queueSave('anniversaries','Dashboard: update anniversary '+c.name);}
+    }else if(c.status==='closed'&&isYMD(c.closingDate)){
+      var now=nowISO();
+      S.anniversaries.items.push({id:uid('a_'),clientId:c.id,name:c.name,address:c.address||'',closingDate:c.closingDate,note:'',createdAt:now,updatedAt:now});
+      queueSave('anniversaries','Dashboard: add anniversary '+c.name);showToast('Added to Home Anniversaries');
+    }
+  }
+  function annivForm(a){
+    a=a||{};var isNew=!a.id;
+    var body=fld('Client name','name','text',a.name,{ph:'e.g. The Riveras'})+fld('Property address','address','text',a.address)+fld('Closing date','closingDate','date',a.closingDate)+fld('Note','note','text',a.note,{ph:'Anything to remember (kids, dog, loved the backyard…)'})
+      +(a.clientId?'<p class="hint">Linked to a client card. Name, address, and closing date follow that card.</p>':'');
+    openModal({title:isNew?'Add past client':'Edit closed home',body:body,
+      onSave:function(){
+        var name=val('name'),cd=val('closingDate');if(!name){alert('Name is required.');return false;}if(!isYMD(cd)){alert('Closing date is required.');return false;}
+        var now=nowISO();var obj=isNew?{id:uid('a_'),clientId:null,createdAt:now}:a;
+        obj.name=name;obj.address=val('address');obj.closingDate=cd;obj.note=val('note');obj.updatedAt=now;
+        if(isNew)S.anniversaries.items.push(obj);
+        queueSave('anniversaries','Dashboard: '+(isNew?'add past client ':'update anniversary ')+name);
+        renderAnniv();renderOverview();showToast('Saved');
+      },
+      onDelete:isNew?null:function(){S.anniversaries.items=S.anniversaries.items.filter(function(x){return x.id!==a.id;});S.anniversaries.pendingDeletes[a.id]=true;queueSave('anniversaries','Dashboard: delete anniversary '+a.name);renderAnniv();renderOverview();}});
+  }
+  function eventForm(e,presetDate){
+    e=e||{};var isNew=!e.id;
+    var body=fld('Title','title','text',e.title,{ph:'Showing at 45 Main St'})
+      +'<div class="frow">'+fld('Date','date','date',e.date||presetDate||todayYMD())+fld('Time (optional)','time','time',e.time)+'</div>'
+      +fld('Type','type','select',e.type||'showings',{options:[['showings',TYPES.showings],['closings',TYPES.closings],['marketing',TYPES.marketing]]})
+      +fld('Notes','notes','textarea',e.notes);
+    openModal({title:isNew?'Add event':'Edit event',body:body,
+      onSave:function(){
+        var t=val('title'),d=val('date');if(!t){alert('Title is required.');return false;}if(!isYMD(d)){alert('Pick a date.');return false;}
+        var now=nowISO();var obj=isNew?{id:uid('e_'),createdAt:now}:e;
+        obj.title=t;obj.date=d;obj.time=val('time');obj.type=val('type');obj.notes=val('notes');obj.updatedAt=now;
+        if(isNew)S.events.items.push(obj);
+        queueSave('events','Dashboard: '+(isNew?'add event ':'update event ')+t);
+        renderCalendar();showToast('Saved');
+      },
+      onDelete:isNew?null:function(){S.events.items=S.events.items.filter(function(x){return x.id!==e.id;});S.events.pendingDeletes[e.id]=true;queueSave('events','Dashboard: delete event '+e.title);renderCalendar();}});
+  }
+  function daySheet(ymd){
+    var list=eventsInRange(ymd,ymd);
+    var body=list.length?list.map(function(ev){
+      var right=ev.derived?'<button class="btn ghost tiny" data-goto="'+ev.ref+'">From '+(ev.ref==='clients'?'Clients':'Anniversaries')+' →</button>':'<button class="btn ghost tiny" data-edit="event:'+esc(ev.id)+'">Edit</button>';
+      return '<div class="dayev"><span class="dot ev-'+ev.type+'"></span><div class="t">'+esc(ev.title)+'<small>'+(ev.time?esc(fmtTime(ev.time))+' · ':'')+esc(TYPES[ev.type]||ev.type)+(ev.notes?' · '+esc(ev.notes):'')+'</small></div>'+right+'</div>';
+    }).join(''):'<div class="empty">Nothing on this day.</div>';
+    body+='<div style="margin-top:14px"><button class="btn sm" data-addday="'+ymd+'">+ Add event on this day</button></div>';
+    openModal({title:fmtLong(ymd),body:body,onSave:null});
+  }
+
+  // ---- events ----
+  document.addEventListener('click',function(e){
+    var t;
+    if((t=e.target.closest('[data-add]'))){if(!connected()){showToast('Connect first');return;}var k=t.dataset.add;if(k==='client')clientForm();else if(k==='anniv')annivForm();else eventForm();return;}
+    if((t=e.target.closest('[data-edit]'))){var p=t.dataset.edit.split(':'),kind=p[0],id=p.slice(1).join(':');
+      if(kind==='client'){var c=S.clients.items.filter(function(x){return x.id===id;})[0];if(c)clientForm(c);}
+      else if(kind==='anniv'){var a=S.anniversaries.items.filter(function(x){return x.id===id;})[0];if(a)annivForm(a);}
+      else if(kind==='event'){var ev=S.events.items.filter(function(x){return x.id===id;})[0];if(ev){closeModal();eventForm(ev);}}
+      return;}
+    if((t=e.target.closest('[data-goto]'))){closeModal();showTab(t.dataset.goto);return;}
+    if((t=e.target.closest('[data-addday]'))){var d=t.dataset.addday;closeModal();eventForm(null,d);return;}
+    if((t=e.target.closest('[data-cal]'))){var a2=t.dataset.cal;
+      if(a2==='today'){var td=P(todayYMD());view.y=td.getFullYear();view.m=td.getMonth();}
+      else if(view.mode==='month'){view.m+=(a2==='next'?1:-1);if(view.m<0){view.m=11;view.y--;}if(view.m>11){view.m=0;view.y++;}}
+      else{view.y+=(a2==='next'?1:-1);}
+      renderCalendar();return;}
+    if((t=e.target.closest('[data-view]'))){view.mode=t.dataset.view;renderCalendar();return;}
+    if((t=e.target.closest('.mini[data-month]'))){view.m=+t.dataset.month;view.mode='month';renderCalendar();return;}
+    if((t=e.target.closest('.cal .cell[data-day]'))){if(!connected()){showToast('Connect first');return;}daySheet(t.dataset.day);return;}
+  });
+  document.addEventListener('change',function(e){
+    var sel=e.target.closest('select[data-move]');if(!sel)return;
+    var id=sel.dataset.move,c=S.clients.items.filter(function(x){return x.id===id;})[0];if(!c)return;
+    var to=sel.value;
+    if(to==='closed'&&!isYMD(c.closingDate)){sel.value=c.status;clientForm(c,{status:'closed',closingDate:todayYMD(),focus:'closingDate'});return;}
+    c.status=to;c.updatedAt=nowISO();
+    queueSave('clients','Dashboard: move '+c.name+' to '+statusOf(to).label);
+    syncAnniversary(c);renderClients();renderOverview();showToast(c.name+' → '+statusOf(to).label);
+  });
+
+  // ---- boot ----
+  (function(){var td=P(todayYMD());view.y=td.getFullYear();view.m=td.getMonth();})();
+  function onTab(id){currentTab=id;if(id==='clients'||id==='anniversaries'||id==='calendar')renderCurrent();}
+  return {pullAll:pullAll,onTab:onTab,S:S};
+})();
+refreshAll();
+</script>
+</body>
+</html>
