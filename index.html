@@ -138,6 +138,25 @@
   .ccard .row{display:flex;gap:8px;align-items:center;margin-top:10px;flex-wrap:wrap}
   .ccard select{font-family:var(--sans);font-size:12.5px;padding:6px 9px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink)}
 
+  /* fsbo */
+  .flags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+  .flag{font-family:var(--sans);font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:999px;background:#F2EBDC;color:var(--muted)}
+  .flag.warn{background:#FBE4DC;color:#A6482E}
+  .flag.ok{background:#E4EFDD;color:#47583F}
+  .flag.appr{background:#E9E6F0;color:#5A5075}
+  .due{background:#FBEDE3;border:1px solid #F0D9C8;border-radius:12px;padding:14px 18px;margin-bottom:22px}
+  .due h4{font-family:var(--sans);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#9A5433;margin-bottom:8px}
+  .due .tp .when{color:#9A5433}
+  .overdue{color:#A6482E;font-weight:600}
+  .ccard .desc{font-size:13.5px;color:var(--muted);margin-top:6px;max-height:3.9em;overflow:hidden;position:relative}
+  .script{white-space:pre-wrap;font-family:inherit;font-size:14.5px;line-height:1.5;background:#F7F1E6;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:6px 0 12px}
+  .shead{display:flex;justify-content:space-between;align-items:center;margin-top:14px}
+  .shead h4{font-family:var(--sans);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--brass-dark)}
+  details.archive{margin-top:20px}
+  details.archive summary{font-family:var(--sans);font-size:12.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);cursor:pointer;padding:8px 0}
+  .fchk{display:flex;align-items:center;gap:8px;font-size:14px;margin:4px 0 12px}
+  .fchk input{width:17px;height:17px;accent-color:var(--brass)}
+
   /* anniversaries */
   .tp{display:flex;gap:14px;align-items:flex-start;padding:12px 0;border-top:1px solid var(--line)}
   .tp:first-child{border-top:none}
@@ -223,6 +242,7 @@
 <nav class="tabs">
   <button class="tab active" data-t="overview">Overview</button>
   <button class="tab" data-t="clients">Clients</button>
+  <button class="tab" data-t="fsbo">FSBO</button>
   <button class="tab" data-t="anniversaries">Anniversaries</button>
   <button class="tab" data-t="calendar">Calendar</button>
   <button class="tab" data-t="content">Content</button>
@@ -252,7 +272,7 @@
 
     <div class="stats">
       <div class="stat"><div class="num">5</div><div class="lbl">Content Pillars</div></div>
-      <div class="stat"><div class="num">6</div><div class="lbl">Auto Tasks Running</div></div>
+      <div class="stat"><div class="num">8</div><div class="lbl">Auto Tasks Running</div></div>
       <div class="stat"><div class="num" id="statActive">&ndash;</div><div class="lbl">Active Clients</div></div>
       <div class="stat"><div class="num" id="statDue">&ndash;</div><div class="lbl">Touchpoints Due (30d)</div></div>
     </div>
@@ -291,6 +311,23 @@
       <div class="tools"><span class="sync">Not connected</span><button class="btn" data-add="client">+ Add client</button></div>
     </div>
     <div id="clientList"><div class="empty">Connect above to load your clients.</div></div>
+  </section>
+
+  <!-- FSBO -->
+  <section class="panel" id="fsbo">
+    <div class="connect-slot"></div>
+    <div class="hubbar">
+      <p class="lead" style="margin:0">For-sale-by-owner leads from your Zillow screenshots. Every touch logged, every follow-up dated, every script in your voice.</p>
+      <div class="tools">
+        <span class="sync">Not connected</span>
+        <label class="btn ghost" style="cursor:pointer">&#8679; Upload screenshot<input type="file" id="fsboFile" accept="image/*" hidden></label>
+        <button class="btn" data-add="fsbo">+ Add FSBO</button>
+      </div>
+    </div>
+    <div class="stats" id="fsboStats"></div>
+    <div id="fsboDue"></div>
+    <div id="fsboList"><div class="empty">Connect above to load your FSBO leads.</div></div>
+    <div class="note"><b>How this works:</b> screenshot a Zillow FSBO listing into your Desktop &rsaquo; FSBO folder (or upload one here from your phone). Every Monday the FSBO task reads new screenshots, pulls the address, price, phone, and description, reads the seller&rsquo;s language, and decides letter vs. call vs. text with a ready script for each. Or just tell Claude &ldquo;process my FSBO screenshots.&rdquo; <br><br><b>Compliance:</b> a listing that says &ldquo;no agent calls&rdquo; gets a letter only. Calls and texts are suggested only after you flip a lead&rsquo;s <b>DNC cleared</b> switch from your Vortex check. Letters and door knocks are always fine.</div>
   </section>
 
   <!-- ANNIVERSARIES -->
@@ -406,12 +443,13 @@
 
   <!-- AUTOMATIONS -->
   <section class="panel" id="autos">
-    <p class="lead">Six tasks run in the cloud &mdash; even when your Mac is closed &mdash; and drop copy-paste-ready work to your phone. You always get the final say: they hand you a strong draft instead of a blank page.</p>
+    <p class="lead">Seven tasks run in the cloud &mdash; even when your Mac is closed &mdash; plus one on your Mac that reads your FSBO screenshots. They drop copy-paste-ready work to your phone. You always get the final say: they hand you a strong draft instead of a blank page.</p>
 
     <div class="connect-slot"></div>
 
     <div class="section-title">Latest from your automations</div>
     <div class="grid g2" id="liveGrid">
+      <div class="card live" data-slug="fsbo" data-title="FSBO Radar" data-next="Tuesday 8 AM"></div>
       <div class="card live" data-slug="strategy-review" data-title="Content Strategy Review" data-next="1st of the month, 8 AM"></div>
       <div class="card live" data-slug="touchpoints" data-title="Client Touchpoints" data-next="Monday 8 AM"></div>
       <div class="card live" data-slug="content-plan" data-title="Weekly Content Plan" data-next="Monday 7 AM"></div>
@@ -432,6 +470,14 @@
     <div class="autorow">
       <div class="day"><div class="d">Mon</div><div class="t">8:00 AM</div></div>
       <div class="body"><h3>Client Touchpoints</h3><p>Checks your Anniversaries list for anything due this week &mdash; 1-month check-in, 6-month check-in, anniversary card &mdash; and drafts each message in your voice.</p></div>
+    </div>
+    <div class="autorow">
+      <div class="day"><div class="d">Mon</div><div class="t">9:00 AM · on your Mac</div></div>
+      <div class="body"><h3>FSBO Screenshots</h3><p>Reads new Zillow screenshots in Desktop &rsaquo; FSBO, pulls out the address, price, phone, and description, and adds each as a lead. Runs when the Claude app is open.</p></div>
+    </div>
+    <div class="autorow">
+      <div class="day"><div class="d">Tue</div><div class="t">8:00 AM</div></div>
+      <div class="body"><h3>FSBO Radar</h3><p>Reads every FSBO lead, extracts details from uploaded screenshots, reads the seller&rsquo;s language, picks letter vs. call vs. text, writes the scripts in your voice, and lists this week&rsquo;s follow-ups.</p></div>
     </div>
     <div class="autorow">
       <div class="day"><div class="d">Tue</div><div class="t">9:00 AM</div></div>
@@ -635,7 +681,23 @@ window.HUB=(function(){
     {key:'closed',label:'Closed',color:'#3E6B4E'}
   ];
   var TYPES={showings:'Showings & appointments',closings:'Closings & deadlines',marketing:'Open houses & marketing',anniversary:'Home anniversary'};
-  var FILES={clients:{path:'data/clients.json',root:'clients'},anniversaries:{path:'data/anniversaries.json',root:'anniversaries'},events:{path:'data/events.json',root:'events'}};
+  var FILES={clients:{path:'data/clients.json',root:'clients'},anniversaries:{path:'data/anniversaries.json',root:'anniversaries'},events:{path:'data/events.json',root:'events'},fsbo:{path:'data/fsbo.json',root:'fsbo'}};
+  var FSTAT=[
+    {key:'new',label:'New',color:'#8A6D3F'},
+    {key:'plan',label:'Plan ready',color:'#B08D57'},
+    {key:'letter',label:'Letter sent',color:'#5A6B54'},
+    {key:'called',label:'Called',color:'#47583F'},
+    {key:'voicemail',label:'Left message',color:'#6E6355'},
+    {key:'texted',label:'Texted',color:'#5A5075'},
+    {key:'talked',label:'Talked',color:'#9A5433'},
+    {key:'appt',label:'Appointment set',color:'#B5714E'},
+    {key:'listed',label:'Listed with me',color:'#3E6B4E',archive:true},
+    {key:'notinterested',label:'Not interested',color:'#9A9A9A',archive:true},
+    {key:'soldfsbo',label:'Sold by owner',color:'#9A9A9A',archive:true},
+    {key:'offmarket',label:'Off market',color:'#9A9A9A',archive:true}
+  ];
+  var TOUCH={letter:['Letter mailed','letter'],door:['Door knock',null],call:['Called (talked briefly)','called'],voicemail:['Called, left voicemail','voicemail'],text:['Texted','texted'],talked:['Real conversation','talked'],appt:['Appointment set','appt'],other:['Other',null]};
+  var APPR={letter:'Letter',call:'Call',text:'Text',door:'Door knock'};
   var S={}; Object.keys(FILES).forEach(function(k){S[k]={items:[],sha:null,dirty:false,pendingDeletes:{},timer:null,loaded:false};});
   var currentTab='overview';
   var view={mode:'month',y:0,m:0};
@@ -664,7 +726,7 @@ window.HUB=(function(){
   // ---- persistence ----
   function url(key){return 'https://api.github.com/repos/'+OWNER+'/'+REPO+'/contents/'+FILES[key].path;}
   function hdr(tok){return {'Authorization':'Bearer '+tok,'Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28'};}
-  function wrap(key){var o={version:1};o[FILES[key].root]=S[key].items;return o;}
+  function wrap(key){var o={version:1};if(key==='fsbo'&&S.fsbo.extra)Object.keys(S.fsbo.extra).forEach(function(k){o[k]=S.fsbo.extra[k];});o[FILES[key].root]=S[key].items;return o;}
   function fetchRemote(key,tok){
     return fetch(url(key)+'?ref='+BRANCH+'&t='+Date.now(),{headers:hdr(tok),cache:'no-store'}).then(function(r){
       if(r.status===404)return {items:[],sha:null};
@@ -672,8 +734,9 @@ window.HUB=(function(){
       if(!r.ok)throw new Error('http '+r.status);
       return r.json().then(function(j){
         var items;
-        try{var o=JSON.parse(b64dec(j.content));items=Array.isArray(o)?o:(o[FILES[key].root]||[]);}catch(e){throw new Error('parse');}
-        return {items:items,sha:j.sha};
+        var extra={};
+        try{var o=JSON.parse(b64dec(j.content));items=Array.isArray(o)?o:(o[FILES[key].root]||[]);if(!Array.isArray(o))Object.keys(o).forEach(function(k){if(k!=='version'&&k!==FILES[key].root)extra[k]=o[k];});}catch(e){throw new Error('parse');}
+        return {items:items,sha:j.sha,extra:extra};
       });
     });
   }
@@ -683,7 +746,7 @@ window.HUB=(function(){
     if(!tok){Object.keys(S).forEach(function(k){S[k].loaded=false;});renderSync('none');renderCurrent();renderOverview();return Promise.resolve();}
     if(anyDirty())return Promise.resolve();
     renderSync('loading');
-    return Promise.all(Object.keys(S).map(function(k){return fetchRemote(k,tok).then(function(r){S[k].items=r.items;S[k].sha=r.sha;S[k].loaded=true;});}))
+    return Promise.all(Object.keys(S).map(function(k){return fetchRemote(k,tok).then(function(r){S[k].items=r.items;S[k].sha=r.sha;S[k].extra=r.extra;S[k].loaded=true;});}))
       .then(function(){renderSync('saved');renderCurrent();renderOverview();})
       .catch(function(e){renderSync(e.message==='auth'?'auth':e.message==='parse'?'parse':'offline');renderCurrent();renderOverview();});
   }
@@ -768,7 +831,7 @@ window.HUB=(function(){
   }
 
   // ---- renderers ----
-  function renderCurrent(){if(currentTab==='clients')renderClients();else if(currentTab==='anniversaries')renderAnniv();else if(currentTab==='calendar')renderCalendar();}
+  function renderCurrent(){if(currentTab==='clients')renderClients();else if(currentTab==='anniversaries')renderAnniv();else if(currentTab==='calendar')renderCalendar();else if(currentTab==='fsbo')renderFsbo();}
   function connected(){return !!getToken()&&S.clients.loaded;}
   function emptyMsg(){return getToken()?'<div class="empty">Loading…</div>':'<div class="empty">Connect above to load this.</div>';}
 
@@ -831,6 +894,150 @@ window.HUB=(function(){
       if(isYMD(a.closingDate)){var t=P(todayYMD()),c=P(a.closingDate);var n=t.getFullYear()-c.getFullYear()-((t.getMonth()<c.getMonth()||(t.getMonth()===c.getMonth()&&t.getDate()<c.getDate()))?1:0);yrs=n<=0?'Under a year in the home':n+(n===1?' year':' years')+' in the home';}
       return '<div class="arow"><div><b>'+esc(a.name)+'</b><div class="sub">'+(a.address?esc(a.address)+' · ':'')+(isYMD(a.closingDate)?'Closed '+fmtMed(a.closingDate):'')+(yrs?' · '+yrs:'')+(a.note?' · '+esc(a.note):'')+'</div></div><button class="btn ghost tiny" data-edit="anniv:'+esc(a.id)+'">Edit</button></div>';
     }).join('');
+  }
+
+  // ---- FSBO ----
+  function fstat(k){for(var i=0;i<FSTAT.length;i++)if(FSTAT[i].key===k)return FSTAT[i];return FSTAT[0];}
+  function lastTouch(f){var t=(f.touches||[]).slice().sort(function(a,b){return (a.date||'')<(b.date||'')?1:-1;})[0];return t||null;}
+  function fsboFlags(f){
+    var h='<div class="flags">';
+    if(f.needsExtraction)h+='<span class="flag warn">Awaiting extraction</span>';
+    if(f.noAgentCalls)h+='<span class="flag warn">No agent calls</span>';
+    h+=f.dncCleared?'<span class="flag ok">DNC cleared</span>':'<span class="flag">DNC not checked</span>';
+    if(f.approach&&f.approach.recommended)h+='<span class="flag appr">Approach: '+esc(APPR[f.approach.recommended]||f.approach.recommended)+'</span>';
+    if(f.source==='upload')h+='<span class="flag">From upload</span>';
+    return h+'</div>';
+  }
+  function renderFsbo(){
+    var el=document.getElementById('fsboList'),st=document.getElementById('fsboStats'),due=document.getElementById('fsboDue');
+    if(!connected()){el.innerHTML=emptyMsg();st.innerHTML='';due.innerHTML='';return;}
+    var items=S.fsbo.items,today=todayYMD();
+    var active=items.filter(function(f){return !fstat(f.status).archive;});
+    var n=function(keys){return active.filter(function(f){return keys.indexOf(f.status)>=0;}).length;};
+    st.innerHTML='<div class="stat"><div class="num">'+n(['new','plan'])+'</div><div class="lbl">New leads</div></div><div class="stat"><div class="num">'+n(['letter','called','voicemail','texted'])+'</div><div class="lbl">In outreach</div></div><div class="stat"><div class="num">'+n(['talked','appt'])+'</div><div class="lbl">Talking / appts</div></div><div class="stat"><div class="num">'+items.filter(function(f){return f.status==='listed';}).length+'</div><div class="lbl">Listed with you</div></div>';
+    var dueList=active.filter(function(f){return isYMD(f.nextFollowUp)&&f.nextFollowUp<=addDays(today,2);}).sort(function(a,b){return a.nextFollowUp<b.nextFollowUp?-1:1;});
+    if(dueList.length){
+      due.innerHTML='<div class="due"><h4>Follow-ups due</h4>'+dueList.map(function(f){var d=daysUntil(f.nextFollowUp);var when=d<0?'<span class="overdue">'+(-d)+'d overdue</span>':d===0?'Today':d===1?'Tomorrow':'In '+d+' days';var lt=lastTouch(f);return '<div class="tp"><div class="when">'+when+'<small>'+esc(fmtShort(f.nextFollowUp))+'</small></div><div class="what"><b>'+esc(f.address||'(no address)')+'</b><span class="kind">'+esc(fstat(f.status).label)+'</span><div class="sub">'+(f.approach&&f.approach.recommended?'Next: '+esc(APPR[f.approach.recommended]||'')+' · ':'')+(lt?'Last: '+esc((TOUCH[lt.type]||[lt.type])[0])+' '+esc(fmtShort(lt.date)):'No touches yet')+' · <button class="btn ghost tiny" data-touch="'+esc(f.id)+'">Log touch</button> <button class="btn ghost tiny" data-scripts="'+esc(f.id)+'">Scripts</button></div></div></div>';}).join('')+'</div>';
+    }else{due.innerHTML='';}
+    if(!items.length){el.innerHTML='<div class="empty">No FSBO leads yet. Screenshot a Zillow FSBO into Desktop &rsaquo; FSBO and say &ldquo;process my FSBO screenshots,&rdquo; upload one above, or click <b>+ Add FSBO</b>.</div>';return;}
+    function card(f){
+      var s=fstat(f.status),lt=lastTouch(f);
+      var meta=[];
+      if(f.price!=null&&f.price!=='')meta.push('<b>'+money(f.price)+'</b>');
+      if(f.beds||f.baths)meta.push((f.beds?f.beds+' bd':'')+(f.beds&&f.baths?' / ':'')+(f.baths?f.baths+' ba':''));
+      if(f.propertyType)meta.push(esc(f.propertyType));
+      if(f.daysOnZillow!=null&&f.daysOnZillow!=='')meta.push(esc(f.daysOnZillow)+' days on Zillow'+(f.capturedAt?' as of '+fmtShort(f.capturedAt):''));
+      var contact=[];
+      if(f.phone)contact.push('<a href="tel:'+esc(String(f.phone).replace(/[^\d+]/g,''))+'" style="color:var(--brass-dark)">'+esc(f.phone)+'</a>');
+      if(f.ownerName)contact.push(esc(f.ownerName));
+      if(f.zillowUrl)contact.push('<a href="'+esc(f.zillowUrl)+'" target="_blank" rel="noopener" style="color:var(--brass-dark)">Zillow</a>');
+      var opts=FSTAT.map(function(x){return '<option value="'+x.key+'"'+(x.key===f.status?' selected':'')+'>'+esc(x.label)+'</option>';}).join('');
+      var fu='';
+      if(isYMD(f.nextFollowUp)){var d=daysUntil(f.nextFollowUp);fu='<div class="meta">Follow up '+(d<0?'<span class="overdue">'+fmtShort(f.nextFollowUp)+' ('+(-d)+'d overdue)</span>':d===0?'<b>today</b>':fmtShort(f.nextFollowUp))+'</div>';}
+      return '<div class="ccard" style="border-left-color:'+s.color+'">'
+        +'<div class="top"><div class="name">'+esc(f.address||'(screenshot, details pending)')+'</div><span class="type" style="background:'+s.color+'22;color:'+s.color+'">'+esc(s.label)+'</span></div>'
+        +(meta.length?'<div class="meta">'+meta.join(' · ')+'</div>':'')
+        +(contact.length?'<div class="meta">'+contact.join(' · ')+'</div>':'')
+        +fsboFlags(f)
+        +(f.description?'<div class="desc">'+esc(f.description)+'</div>':'')
+        +(lt?'<div class="meta">Last touch: '+esc((TOUCH[lt.type]||[lt.type])[0])+' · '+esc(fmtShort(lt.date))+(lt.note?' · '+esc(lt.note):'')+'</div>':'')
+        +fu
+        +(f.notes?'<div class="notes">'+esc(f.notes)+'</div>':'')
+        +'<div class="row"><select data-fmove="'+esc(f.id)+'">'+opts+'</select><button class="btn ghost tiny" data-touch="'+esc(f.id)+'">Log touch</button><button class="btn ghost tiny" data-scripts="'+esc(f.id)+'">Scripts</button><button class="btn ghost tiny" data-edit="fsbo:'+esc(f.id)+'">Edit</button></div>'
+        +'</div>';
+    }
+    var html='';
+    FSTAT.filter(function(x){return !x.archive;}).forEach(function(x){
+      var list=items.filter(function(f){return f.status===x.key;}).sort(function(a,b){return (a.nextFollowUp||'9999')<(b.nextFollowUp||'9999')?-1:1;});
+      if(!list.length)return;
+      html+='<div class="lane"><h4 style="color:'+x.color+'">'+esc(x.label)+'<span class="cnt">'+list.length+'</span></h4><div class="cgrid">'+list.map(card).join('')+'</div></div>';
+    });
+    var arch=items.filter(function(f){return fstat(f.status).archive;});
+    if(arch.length){html+='<details class="archive"><summary>Archive · '+arch.length+' (listed, not interested, sold by owner, off market)</summary><div class="cgrid" style="margin-top:10px">'+arch.map(card).join('')+'</div></details>';}
+    if(!html)html='<div class="empty">Nothing active.</div>';
+    el.innerHTML=html;
+  }
+  function fsboForm(f){
+    f=f||{};var isNew=!f.id;
+    var yn=function(v){return [['no','No'],['yes','Yes']].map(function(o){return o;});};
+    var body=fld('Address','address','text',f.address,{ph:'123 Main St, Staten Island, NY 10314'})
+      +'<div class="frow">'+fld('Asking price','price','number',f.price==null?'':f.price,{ph:'699000',step:'1000'})+fld('Phone on listing','phone','text',f.phone,{ph:'(917) 555-0100'})+'</div>'
+      +'<div class="frow">'+fld('Owner name (if known)','ownerName','text',f.ownerName)+fld('Zillow link','zillowUrl','text',f.zillowUrl,{ph:'https://www.zillow.com/homedetails/…'})+'</div>'
+      +'<div class="frow">'+fld('Beds','beds','text',f.beds)+fld('Baths','baths','text',f.baths)+'</div>'
+      +'<div class="frow">'+fld('Property type','propertyType','text',f.propertyType,{ph:'2-family high ranch'})+fld('Days on Zillow (at capture)','daysOnZillow','number',f.daysOnZillow==null?'':f.daysOnZillow)+'</div>'
+      +fld('Listing description (paste it)','description','textarea',f.description,{ph:'Paste the seller’s own words. The language decides the approach.'})
+      +'<div class="frow">'+fld('Says “no agent calls”?','noAgentCalls','select',f.noAgentCalls?'yes':'no',{options:yn()})+fld('DNC cleared in Vortex?','dncCleared','select',f.dncCleared?'yes':'no',{options:yn()})+'</div>'
+      +'<div class="frow">'+fld('Status','status','select',f.status||'new',{options:FSTAT.map(function(x){return [x.key,x.label];})})+fld('Next follow-up','nextFollowUp','date',f.nextFollowUp)+'</div>'
+      +fld('Recommended approach','approachRec','select',(f.approach&&f.approach.recommended)||'',{options:[['','(let the FSBO task decide)'],['letter','Letter'],['call','Call'],['text','Text'],['door','Door knock']]})
+      +fld('Your notes','notes','textarea',f.notes);
+    openModal({title:isNew?'Add FSBO lead':'Edit FSBO lead',body:body,
+      onSave:function(){
+        var addr=val('address');if(!addr){alert('Address is required.');return false;}
+        var now=nowISO(),price=val('price'),doz=val('daysOnZillow');
+        var obj=isNew?{id:uid('f_'),createdAt:now,source:'manual',capturedAt:todayYMD(),touches:[],needsPlan:true}:f;
+        obj.address=addr;obj.price=price===''?null:Number(price);obj.phone=val('phone');obj.ownerName=val('ownerName');obj.zillowUrl=val('zillowUrl');obj.beds=val('beds');obj.baths=val('baths');obj.propertyType=val('propertyType');obj.daysOnZillow=doz===''?null:Number(doz);
+        obj.description=val('description');obj.noAgentCalls=val('noAgentCalls')==='yes';obj.dncCleared=val('dncCleared')==='yes';obj.status=val('status');obj.nextFollowUp=val('nextFollowUp');obj.notes=val('notes');
+        var rec=val('approachRec');if(rec){obj.approach=obj.approach||{};obj.approach.recommended=rec;if(!obj.approach.why)obj.approach.why='Set by Tayla.';}
+        if(obj.noAgentCalls&&obj.approach&&(obj.approach.recommended==='call'||obj.approach.recommended==='text')){obj.approach.recommended='letter';obj.approach.why='Listing says no agent calls, so letter (and door knock) only.';}
+        if(isNew||!obj.scripts)obj.needsPlan=true;
+        obj.updatedAt=now;
+        if(isNew)S.fsbo.items.push(obj);
+        queueSave('fsbo','Dashboard: '+(isNew?'add FSBO ':'update FSBO ')+addr);
+        renderFsbo();showToast(isNew?'FSBO added':'Saved');
+      },
+      onDelete:isNew?null:function(){S.fsbo.items=S.fsbo.items.filter(function(x){return x.id!==f.id;});S.fsbo.pendingDeletes[f.id]=true;queueSave('fsbo','Dashboard: delete FSBO '+f.address);renderFsbo();}});
+  }
+  function touchForm(f){
+    var body=fld('What did you do?','ttype','select','letter',{options:Object.keys(TOUCH).map(function(k){return [k,TOUCH[k][0]];})})
+      +'<div class="frow">'+fld('Date','tdate','date',todayYMD())+fld('Next follow-up','tnext','date',addDays(todayYMD(),3))+'</div>'
+      +fld('Note','tnote','textarea','',{ph:'What they said, what you offered, mood…'})
+      +'<label class="fchk"><input type="checkbox" name="tstatus" checked> Move the status to match</label>';
+    openModal({title:'Log a touch · '+(f.address||'FSBO'),body:body,saveLabel:'Log it',
+      onSave:function(){
+        var type=val('ttype'),date=val('tdate');if(!isYMD(date)){alert('Pick a date.');return false;}
+        f.touches=f.touches||[];f.touches.push({date:date,type:type,note:val('tnote')});
+        var nx=val('tnext');f.nextFollowUp=isYMD(nx)?nx:'';
+        var cb=mBody.querySelector('[name="tstatus"]');var to=TOUCH[type]&&TOUCH[type][1];
+        if(cb&&cb.checked&&to&&!fstat(f.status).archive){var order=FSTAT.map(function(x){return x.key;});if(order.indexOf(to)>order.indexOf(f.status)||f.status==='voicemail'||f.status==='called')f.status=to;}
+        f.updatedAt=nowISO();
+        queueSave('fsbo','Dashboard: FSBO touch '+(TOUCH[type]||[type])[0]+' · '+f.address);
+        renderFsbo();showToast('Logged');
+      }});
+  }
+  function scriptsSheet(f){
+    var a=f.approach||{},s=f.scripts||{};
+    var body='';
+    if(f.needsExtraction||f.needsPlan||!s.letter){body+='<div class="empty">No plan yet for this lead. The FSBO task writes it on Monday, or tell Claude &ldquo;plan my FSBO at '+esc(f.address||'this address')+'&rdquo; to get it now.</div>';}
+    else{
+      body+='<p><b>Recommended: '+esc(APPR[a.recommended]||a.recommended||'')+'</b>'+(a.why?' &mdash; '+esc(a.why):'')+'</p>';
+      if(a.offer&&a.offer.length)body+='<p class="small" style="margin-top:6px"><b>What to offer them:</b></p><ul style="margin:4px 0 0 18px;font-size:14.5px">'+a.offer.map(function(o){return '<li>'+esc(o)+'</li>';}).join('')+'</ul>';
+      if(a.signals&&a.signals.length)body+='<p class="hint">Signals in their listing: '+esc(a.signals.join(' · '))+'</p>';
+      [['letter','Letter (always OK)'],['call','Call opener'+(f.dncCleared?'':' (only after DNC check)')],['text','Text'+(f.dncCleared?'':' (only after DNC check)')]].forEach(function(p){
+        if(!s[p[0]])return;
+        if(f.noAgentCalls&&p[0]!=='letter')return;
+        body+='<div class="shead"><h4>'+esc(p[1])+'</h4><button class="btn ghost tiny" data-copyscript="'+p[0]+'">Copy</button></div><pre class="script" data-script="'+p[0]+'">'+esc(s[p[0]])+'</pre>';
+      });
+      if(f.noAgentCalls)body+='<p class="hint">This seller wrote &ldquo;no agent calls,&rdquo; so only the letter is shown.</p>';
+    }
+    openModal({title:(f.address||'FSBO')+' · scripts',body:body,onSave:null});
+  }
+  function fsboUpload(file){
+    if(!connected()){showToast('Connect first');return;}
+    var tok=getToken();
+    showToast('Uploading…');
+    resizeImage(file,1800).then(function(dataUrl){
+      var name='fsbo/inbox/'+todayYMD().replace(/-/g,'')+'-'+uid('').slice(0,8)+'.jpg';
+      var b64=dataUrl.split(',')[1];
+      return fetch('https://api.github.com/repos/'+OWNER+'/'+REPO+'/contents/'+name,{method:'PUT',headers:hdr(tok),body:JSON.stringify({message:'Dashboard: upload FSBO screenshot',branch:BRANCH,content:b64})})
+        .then(function(r){if(r.status===401||r.status===403)throw new Error('auth');if(!r.ok)throw new Error('http '+r.status);return name;});
+    }).then(function(path){
+      var now=nowISO();
+      S.fsbo.items.push({id:uid('f_'),address:'',price:null,phone:'',ownerName:'',zillowUrl:'',beds:'',baths:'',propertyType:'',daysOnZillow:null,description:'',source:'upload',screenshot:path,capturedAt:todayYMD(),noAgentCalls:false,dncCleared:false,status:'new',touches:[],nextFollowUp:'',notes:'',needsExtraction:true,needsPlan:true,createdAt:now,updatedAt:now});
+      queueSave('fsbo','Dashboard: add FSBO from screenshot');renderFsbo();showToast('Screenshot saved. Details get pulled by the FSBO task.');
+    }).catch(function(e){showToast(e.message==='auth'?'Token can’t write. Needs Contents: Read and write.':'Upload failed');});
+  }
+  function resizeImage(file,maxW){
+    return new Promise(function(res,rej){var img=new Image(),url=URL.createObjectURL(file);img.onload=function(){var sc=Math.min(1,maxW/img.width);var c=document.createElement('canvas');c.width=Math.round(img.width*sc);c.height=Math.round(img.height*sc);c.getContext('2d').drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(url);res(c.toDataURL('image/jpeg',0.85));};img.onerror=rej;img.src=url;});
   }
 
   var MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
@@ -985,12 +1192,16 @@ window.HUB=(function(){
   // ---- events ----
   document.addEventListener('click',function(e){
     var t;
-    if((t=e.target.closest('[data-add]'))){if(!connected()){showToast('Connect first');return;}var k=t.dataset.add;if(k==='client')clientForm();else if(k==='anniv')annivForm();else eventForm();return;}
+    if((t=e.target.closest('[data-add]'))){if(!connected()){showToast('Connect first');return;}var k=t.dataset.add;if(k==='client')clientForm();else if(k==='anniv')annivForm();else if(k==='fsbo')fsboForm();else eventForm();return;}
     if((t=e.target.closest('[data-edit]'))){var p=t.dataset.edit.split(':'),kind=p[0],id=p.slice(1).join(':');
       if(kind==='client'){var c=S.clients.items.filter(function(x){return x.id===id;})[0];if(c)clientForm(c);}
       else if(kind==='anniv'){var a=S.anniversaries.items.filter(function(x){return x.id===id;})[0];if(a)annivForm(a);}
       else if(kind==='event'){var ev=S.events.items.filter(function(x){return x.id===id;})[0];if(ev){closeModal();eventForm(ev);}}
+      else if(kind==='fsbo'){var fb=S.fsbo.items.filter(function(x){return x.id===id;})[0];if(fb){closeModal();fsboForm(fb);}}
       return;}
+    if((t=e.target.closest('[data-touch]'))){var ft=S.fsbo.items.filter(function(x){return x.id===t.dataset.touch;})[0];if(ft){closeModal();touchForm(ft);}return;}
+    if((t=e.target.closest('[data-scripts]'))){var fs=S.fsbo.items.filter(function(x){return x.id===t.dataset.scripts;})[0];if(fs){closeModal();scriptsSheet(fs);}return;}
+    if((t=e.target.closest('[data-copyscript]'))){var pre=mBody.querySelector('pre[data-script="'+t.dataset.copyscript+'"]');if(pre&&navigator.clipboard){navigator.clipboard.writeText(pre.textContent).then(function(){showToast('Copied!')});}return;}
     if((t=e.target.closest('[data-goto]'))){closeModal();showTab(t.dataset.goto);return;}
     if((t=e.target.closest('[data-addday]'))){var d=t.dataset.addday;closeModal();eventForm(null,d);return;}
     if((t=e.target.closest('[data-cal]'))){var a2=t.dataset.cal;
@@ -1003,6 +1214,9 @@ window.HUB=(function(){
     if((t=e.target.closest('.cal .cell[data-day]'))){if(!connected()){showToast('Connect first');return;}daySheet(t.dataset.day);return;}
   });
   document.addEventListener('change',function(e){
+    if(e.target&&e.target.id==='fsboFile'){var file=e.target.files&&e.target.files[0];e.target.value='';if(file)fsboUpload(file);return;}
+    var fm=e.target.closest('select[data-fmove]');
+    if(fm){var fo=S.fsbo.items.filter(function(x){return x.id===fm.dataset.fmove;})[0];if(!fo)return;fo.status=fm.value;fo.updatedAt=nowISO();queueSave('fsbo','Dashboard: FSBO '+fo.address+' → '+fstat(fm.value).label);renderFsbo();showToast(fstat(fm.value).label);return;}
     var sel=e.target.closest('select[data-move]');if(!sel)return;
     var id=sel.dataset.move,c=S.clients.items.filter(function(x){return x.id===id;})[0];if(!c)return;
     var to=sel.value;
@@ -1014,7 +1228,7 @@ window.HUB=(function(){
 
   // ---- boot ----
   (function(){var td=P(todayYMD());view.y=td.getFullYear();view.m=td.getMonth();})();
-  function onTab(id){currentTab=id;if(id==='clients'||id==='anniversaries'||id==='calendar')renderCurrent();}
+  function onTab(id){currentTab=id;if(id==='clients'||id==='anniversaries'||id==='calendar'||id==='fsbo')renderCurrent();}
   return {pullAll:pullAll,onTab:onTab,S:S};
 })();
 refreshAll();
