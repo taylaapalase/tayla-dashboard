@@ -251,8 +251,8 @@
       <span>The one rule that governs everything here</span></div>
 
     <div class="stats">
-      <div class="stat"><div class="num">4</div><div class="lbl">Content Pillars</div></div>
-      <div class="stat"><div class="num">5</div><div class="lbl">Auto Tasks Running</div></div>
+      <div class="stat"><div class="num">5</div><div class="lbl">Content Pillars</div></div>
+      <div class="stat"><div class="num">6</div><div class="lbl">Auto Tasks Running</div></div>
       <div class="stat"><div class="num" id="statActive">&ndash;</div><div class="lbl">Active Clients</div></div>
       <div class="stat"><div class="num" id="statDue">&ndash;</div><div class="lbl">Touchpoints Due (30d)</div></div>
     </div>
@@ -330,56 +330,16 @@
 
   <!-- CONTENT -->
   <section class="panel" id="content">
-    <p class="lead">What to make, how to hook, and how to close. Build every caption as <b>Hook &rarr; Body &rarr; CTA</b>.</p>
+    <p class="lead">What to make, how to hook, and how to close. Build every caption as <b>Hook &rarr; Body &rarr; CTA</b>. This tab reads your live strategy file, so what you see here is exactly what your automations use.</p>
 
-    <div class="section-title">The 4 pillars</div>
-    <div class="grid g2">
-      <div class="card"><span class="pill p-edu">Pillar 1 · Anchor</span><h3>First-time buyer education</h3><p class="small">One concept per post, explained simply with a real number example. This builds the &ldquo;she actually explains things&rdquo; reputation.</p>
-        <ul><li>Pre-approval vs. pre-qualification</li><li>You don&rsquo;t need 20% down</li><li>Closing costs &amp; earnest money</li><li>FHA vs. conventional vs. VA</li><li>What&rsquo;s actually in your monthly payment</li><li>HomeFirst &amp; first-time buyer programs</li></ul>
-      </div>
-      <div class="card"><span class="pill p-local">Pillar 2</span><h3>Staten Island local / lifestyle</h3><p class="small">Neighborhoods and local businesses. Makes the page feel like home, not a billboard.</p>
-        <ul><li>Neighborhood spotlights (West Brighton, Great Kills, Mid-Island)</li><li>Local business features</li><li>Where to eat / coffee / things to do</li><li>Why people love the Island</li></ul>
-      </div>
-      <div class="card"><span class="pill p-home">Pillar 3</span><h3>Home &amp; design (your house)</h3><p class="small">West Brighton reno &mdash; warm, classic, collected. Before/afters and &ldquo;here&rsquo;s what I chose and why&rdquo; do great.</p>
-        <ul><li>Paint picks (Alabaster, Greek Villa)</li><li>Brass hardware &amp; lighting</li><li>Working with a 1920s home</li><li>Design decisions + the why</li></ul>
-      </div>
-      <div class="card"><span class="pill p-personal">Pillar 4</span><h3>Personal / realtor life</h3><p class="small">Client wins, day-in-the-life, honest moments, Bodie, humor.</p>
-        <ul><li>&ldquo;Real estate is not for the weak &#128517;&rdquo;</li><li>Client closing wins</li><li>Behind-the-scenes of a showing</li><li>What nobody tells you about this job</li></ul>
-      </div>
-    </div>
-
-    <div class="section-title" style="margin-top:34px">Hook library <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);font-family:serif;font-size:13px">&mdash; tap to copy</span></div>
-    <div class="chips">
-      <span class="chip copy">Buying a home is HARD right now&hellip; but it doesn&rsquo;t HAVE to be &#128527;</span>
-      <span class="chip copy">Nobody tells you this when you&rsquo;re buying your first house&hellip;</span>
-      <span class="chip copy">Before you start looking at houses, do THIS.</span>
-      <span class="chip copy">If you&rsquo;re a first-time buyer, save this.</span>
-      <span class="chip copy">You don&rsquo;t need 20% down to buy a house.</span>
-      <span class="chip copy">Here&rsquo;s what actually happens after you get pre-approved&hellip;</span>
-      <span class="chip copy">The thing that surprises every first-time buyer on Staten Island&hellip;</span>
-      <span class="chip copy">POV: you thought you couldn&rsquo;t afford a house on Staten Island&hellip;</span>
-    </div>
-
-    <div class="section-title" style="margin-top:34px">CTA bank <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);font-family:serif;font-size:13px">&mdash; tap to copy</span></div>
-    <div class="chips">
-      <span class="chip copy">DM me &lsquo;HOME&rsquo; and I&rsquo;ll send you the info.</span>
-      <span class="chip copy">Save this for when you&rsquo;re ready to buy.</span>
-      <span class="chip copy">Send this to a friend who&rsquo;s house hunting.</span>
-      <span class="chip copy">Have questions? DM me &mdash; I actually answer.</span>
-      <span class="chip copy">Want to know if you qualify? Let&rsquo;s chat.</span>
-      <span class="chip copy">Follow for real estate that actually makes sense.</span>
-    </div>
+    <div class="connect-slot"></div>
+    <div class="note" id="stratBanner" hidden style="margin:0 0 18px"></div>
+    <div id="strategyLive"><div class="empty">Connect above to load your content strategy.</div></div>
 
     <div class="grid g2" style="margin-top:34px">
       <div class="card">
-        <div class="section-title" style="margin-top:0">Weekly rhythm</div>
-        <table>
-          <tr><th>Day</th><th>Post</th></tr>
-          <tr><td><b>Mon</b></td><td>Education carousel/Reel <span class="badge b-active">Pillar 1</span></td></tr>
-          <tr><td><b>Wed</b></td><td>Local / lifestyle <span class="badge b-warm">Pillar 2</span></td></tr>
-          <tr><td><b>Fri</b></td><td>Home/design or personal <span class="badge b-hot">3 / 4</span></td></tr>
-          <tr><td><b>Daily</b></td><td>Stories: polls, Q&amp;A, BTS</td></tr>
-        </table>
+        <div class="section-title" style="margin-top:0">Keeping this current</div>
+        <p class="small">On the 1st of each month the <b>Content Strategy Review</b> task reads what your other tasks produced, your seller-first goal, and what&rsquo;s moving in the Staten Island market, then proposes changes to these pillars, hooks, and CTAs. Nothing changes on its own: a banner appears at the top of this tab, you read the proposal, and you tell Claude &ldquo;apply the strategy update&rdquo; or &ldquo;skip this month.&rdquo; You can also just say &ldquo;add a hook about&hellip;&rdquo; any time.</p>
       </div>
       <div class="card">
         <div class="section-title" style="margin-top:0">Before you post</div>
@@ -446,12 +406,13 @@
 
   <!-- AUTOMATIONS -->
   <section class="panel" id="autos">
-    <p class="lead">Five tasks run in the cloud &mdash; even when your Mac is closed &mdash; and drop copy-paste-ready work to your phone. You always get the final say: they hand you a strong draft instead of a blank page.</p>
+    <p class="lead">Six tasks run in the cloud &mdash; even when your Mac is closed &mdash; and drop copy-paste-ready work to your phone. You always get the final say: they hand you a strong draft instead of a blank page.</p>
 
     <div class="connect-slot"></div>
 
     <div class="section-title">Latest from your automations</div>
     <div class="grid g2" id="liveGrid">
+      <div class="card live" data-slug="strategy-review" data-title="Content Strategy Review" data-next="1st of the month, 8 AM"></div>
       <div class="card live" data-slug="touchpoints" data-title="Client Touchpoints" data-next="Monday 8 AM"></div>
       <div class="card live" data-slug="content-plan" data-title="Weekly Content Plan" data-next="Monday 7 AM"></div>
       <div class="card live" data-slug="follow-up-drafts" data-title="Lead Follow-Up Drafts" data-next="Tuesday 9 AM"></div>
@@ -479,6 +440,10 @@
     <div class="autorow">
       <div class="day"><div class="d">Thu</div><div class="t">8:00 AM</div></div>
       <div class="body"><h3>Staten Island Market Update</h3><p>Fresh rates + SI market trends turned into a plain-English take, an IG caption, and a client-ready email/text, with sources.</p></div>
+    </div>
+    <div class="autorow">
+      <div class="day"><div class="d">1st</div><div class="t">8:00 AM · monthly</div></div>
+      <div class="body"><h3>Content Strategy Review</h3><p>Reviews the month&rsquo;s content output, your seller-first goal, and market themes, then proposes updates to your pillars, hooks, and CTAs. Applied only when you approve.</p></div>
     </div>
 
     <div class="note"><b>Where else to find results:</b> every run is also a session at <a href="https://claude.ai/code/routines" target="_blank" rel="noopener">claude.ai/code/routines</a>, readable on your Mac or in the Claude mobile app. <br><br><b>Want to tweak them?</b> Just tell Claude &mdash; e.g. &ldquo;move my content plan to Sunday nights,&rdquo; &ldquo;add a seller post to the weekly plan,&rdquo; or &ldquo;make the market update every other week.&rdquo; Times are Eastern; after clocks change Nov 1 they land an hour later unless you ask Claude to shift them. <br><br><b>Ideas to add later:</b> local business spotlight &middot; monthly performance check-in &middot; new-listing launch kit &middot; open house promo package.</div>
@@ -516,12 +481,11 @@
   // ---- toast + copy chips ----
   var toast=document.getElementById('toast');
   function showToast(msg){toast.textContent=msg;toast.classList.add('show');clearTimeout(toast._t);toast._t=setTimeout(function(){toast.classList.remove('show')},1300);}
-  document.querySelectorAll('.chip.copy').forEach(function(c){
-    c.addEventListener('click',function(){
-      var t=c.textContent.trim();
-      if(navigator.clipboard){navigator.clipboard.writeText(t).then(function(){showToast('Copied!')}).catch(function(){showToast('Copied!')});}
-      else{showToast('Copied!');}
-    });
+  document.addEventListener('click',function(e){
+    var c=e.target.closest('.chip.copy'); if(!c) return;
+    var t=c.textContent.trim();
+    if(navigator.clipboard){navigator.clipboard.writeText(t).then(function(){showToast('Copied!')}).catch(function(){showToast('Copied!')});}
+    else{showToast('Copied!');}
   });
   document.querySelectorAll('.check input').forEach(function(cb){
     cb.addEventListener('change',function(){cb.closest('li').classList.toggle('done',cb.checked);});
@@ -605,14 +569,51 @@
           .then(function(c){var when=(c&&c[0]&&c[0].commit&&c[0].commit.committer)?c[0].commit.committer.date:null;renderCard(card,{md:md,updated:when});});
       });
   }
+  // ---- live content strategy (content-strategy.md on main) ----
+  function renderStrategy(md){
+    var el=document.getElementById('strategyLive'); if(!el) return;
+    if(!md){el.innerHTML='<div class="empty">Connect above to load your content strategy from content-strategy.md.</div>';return;}
+    var parts=md.replace(/\r/g,'').split(/\n(?=## )/),html='';
+    parts.forEach(function(p){
+      var m=p.match(/^## ([^\n]*)\n?([\s\S]*)$/);
+      if(!m){html+='<div class="card live" style="margin-bottom:16px"><div class="md" style="max-height:none">'+mdToHtml(p)+'</div></div>';return;}
+      var title=m[1].trim(),body=m[2];
+      if(/hook library|cta bank/i.test(title)){
+        var items=[],rest=[];
+        body.split('\n').forEach(function(l){var mm=l.match(/^\s*[-*]\s+(.*)$/);if(mm)items.push(mm[1].trim().replace(/^["“]|["”]$/g,''));else if(l.trim())rest.push(l.trim());});
+        html+='<div class="section-title" style="margin-top:28px">'+esc(title)+' <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);font-family:serif;font-size:13px">&mdash; tap to copy</span></div>'
+          +(rest.length?'<p class="small" style="color:var(--muted);margin-bottom:10px">'+inline(rest.join(' '))+'</p>':'')
+          +'<div class="chips">'+items.map(function(t){return '<span class="chip copy">'+inline(t)+'</span>';}).join('')+'</div>';
+      }else{
+        html+='<div class="section-title" style="margin-top:28px">'+esc(title)+'</div><div class="card live"><div class="md" style="max-height:none">'+mdToHtml(body)+'</div></div>';
+      }
+    });
+    el.innerHTML=html;
+  }
+  function loadStrategy(tok){
+    return fetch('https://api.github.com/repos/'+LIVE.owner+'/'+LIVE.repo+'/contents/content-strategy.md?ref=main&t='+Date.now(),{headers:ghHeaders(tok,true),cache:'no-store'})
+      .then(function(r){if(r.status===401||r.status===403)throw new Error('auth');if(!r.ok)throw new Error('http '+r.status);return r.text();})
+      .then(function(md){renderStrategy(md);});
+  }
+  function renderStratBanner(){
+    var b=document.getElementById('stratBanner'),card=document.querySelector('.card.live[data-slug="strategy-review"]');
+    if(!b)return;
+    if(card&&card._md){
+      var first=(card._md.split('\n')[0]||'').replace(/^#+\s*/,'');
+      b.hidden=false;
+      b.innerHTML='<b>A strategy review is waiting.</b> '+esc(first)+'. Read the proposal on the <button class="btn ghost tiny" data-goto="autos">Automations tab</button>, then tell Claude &ldquo;apply the strategy update&rdquo; or &ldquo;skip this month.&rdquo;';
+    }else{b.hidden=true;}
+  }
   function refreshAll(){
     var tok=getToken();
-    var cards=document.querySelectorAll('.card.live');
+    var cards=document.querySelectorAll('.card.live[data-slug]');
     if(window.HUB) HUB.pullAll();
-    if(!tok){cards.forEach(function(c){renderCard(c,{msg:'Connect with your GitHub token to see this here. Next run: '+c.dataset.next+'.'});});return;}
+    if(!tok){cards.forEach(function(c){renderCard(c,{msg:'Connect with your GitHub token to see this here. Next run: '+c.dataset.next+'.'});});renderStrategy(null);renderStratBanner();return;}
     setStatus('Checking GitHub…');
-    Promise.all(Array.prototype.map.call(cards,function(c){return loadCard(c,tok);}))
-      .then(function(){setStatus('Connected to '+LIVE.owner+'/'+LIVE.repo+' · refreshed '+new Date().toLocaleTimeString(),'ok');})
+    var jobs=Array.prototype.map.call(cards,function(c){return loadCard(c,tok);});
+    jobs.push(loadStrategy(tok));
+    Promise.all(jobs)
+      .then(function(){renderStratBanner();setStatus('Connected to '+LIVE.owner+'/'+LIVE.repo+' · refreshed '+new Date().toLocaleTimeString(),'ok');})
       .catch(function(e){
         var msg=(e&&e.message==='auth')?'GitHub rejected the token. Check it covers tayla-brand with Contents: Read and write, and hasn’t expired.':'Couldn’t reach GitHub ('+(e&&e.message)+'). Try Reload.';
         setStatus(msg,'err');
